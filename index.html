@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock McDo - Gestion des stocks</title>
+    <title>Stock McDo</title>
     <style>
         * {
             margin: 0;
@@ -12,106 +12,92 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
             min-height: 100vh;
             padding: 20px;
         }
         
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
         }
         
         .header {
-            background: #dc3545;
-            color: white;
-            padding: 30px;
             text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
         }
         
         .header h1 {
-            font-size: 28px;
-            margin-bottom: 5px;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 8px;
         }
         
         .header p {
-            opacity: 0.9;
+            color: #666;
             font-size: 14px;
+            font-weight: 300;
         }
         
         .product-list {
-            padding: 20px;
-            max-height: 600px;
-            overflow-y: auto;
+            display: grid;
+            gap: 12px;
         }
         
         .product-item {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 18px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         
         .product-item:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: #151515;
+            border-color: #222;
         }
         
         .product-name {
-            font-weight: 600;
-            color: #333;
-            font-size: 16px;
+            color: #e0e0e0;
+            font-size: 15px;
+            font-weight: 400;
             flex: 1;
         }
         
         .quantity-controls {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
         }
         
         .btn {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border: none;
-            border-radius: 50%;
-            font-size: 20px;
-            font-weight: bold;
+            border-radius: 6px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 300;
             cursor: pointer;
             transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #222;
         }
         
-        .btn-minus {
-            background: #dc3545;
-            color: white;
-        }
-        
-        .btn-minus:hover {
-            background: #c82333;
-            transform: scale(1.1);
-        }
-        
-        .btn-plus {
-            background: #28a745;
-            color: white;
-        }
-        
-        .btn-plus:hover {
-            background: #218838;
-            transform: scale(1.1);
+        .btn:hover {
+            background: #222;
+            border-color: #333;
         }
         
         .btn:active {
@@ -119,26 +105,34 @@
         }
         
         .quantity {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            min-width: 40px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #fff;
+            min-width: 32px;
             text-align: center;
+            font-variant-numeric: tabular-nums;
         }
         
         .footer {
-            background: #f8f9fa;
-            padding: 20px;
             text-align: center;
-            color: #666;
-            font-size: 14px;
-            border-top: 1px solid #dee2e6;
+            margin-top: 40px;
+            padding: 20px;
+            color: #444;
+            font-size: 13px;
+            font-weight: 300;
         }
         
         @media (max-width: 480px) {
-            .container {
-                margin: 0;
-                border-radius: 0;
+            body {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .product-item {
+                padding: 14px 16px;
             }
             
             .product-name {
@@ -146,9 +140,14 @@
             }
             
             .btn {
-                width: 35px;
-                height: 35px;
-                font-size: 18px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+            }
+            
+            .quantity {
+                font-size: 15px;
+                min-width: 28px;
             }
         }
     </style>
@@ -156,14 +155,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🍔 Stock McDo</h1>
-            <p>Gestion simplifiée des stocks</p>
+            <h1>Stock McDo</h1>
+            <p>Gestion des stocks</p>
         </div>
         
         <div class="product-list" id="productList"></div>
         
         <div class="footer">
-            📊 Les quantités sont sauvegardées automatiquement
+            Données sauvegardées automatiquement
         </div>
     </div>
 
@@ -187,7 +186,6 @@
             "P'tit Wrap Ranch"
         ];
 
-        // Récupérer les quantités depuis localStorage
         function getQuantities() {
             const saved = localStorage.getItem('stockMcdo');
             if (saved) {
@@ -196,14 +194,12 @@
             return produits.reduce((acc, p) => ({...acc, [p]: 0}), {});
         }
 
-        // Sauvegarder les quantités
         function saveQuantities(quantities) {
             localStorage.setItem('stockMcdo', JSON.stringify(quantities));
         }
 
         let quantities = getQuantities();
 
-        // Générer l'interface
         function render() {
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
@@ -214,9 +210,9 @@
                 item.innerHTML = `
                     <div class="product-name">${produit}</div>
                     <div class="quantity-controls">
-                        <button class="btn btn-minus" onclick="decrement('${produit}')">−</button>
+                        <button class="btn" onclick="decrement('${produit}')">−</button>
                         <div class="quantity">${quantities[produit]}</div>
-                        <button class="btn btn-plus" onclick="increment('${produit}')">+</button>
+                        <button class="btn" onclick="increment('${produit}')">+</button>
                     </div>
                 `;
                 productList.appendChild(item);
@@ -237,7 +233,6 @@
             }
         }
 
-        // Initialiser l'affichage
         render();
     </script>
 </body>
