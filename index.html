@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock McDo - Gestion des stocks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #dc3545;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .product-list {
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .product-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .product-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .product-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            flex: 1;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-minus {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-minus:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+        
+        .btn-plus {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-plus:hover {
+            background: #218838;
+            transform: scale(1.1);
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .quantity {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .product-name {
+                font-size: 14px;
+            }
+            
+            .btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍔 Stock McDo</h1>
+            <p>Gestion simplifiée des stocks</p>
+        </div>
+        
+        <div class="product-list" id="productList"></div>
+        
+        <div class="footer">
+            📊 Les quantités sont sauvegardées automatiquement
+        </div>
+    </div>
+
+    <script>
+        const produits = [
+            'Big Mac',
+            'McChicken',
+            'Royal Deluxe',
+            'Frites M',
+            'Frites L',
+            'Nuggets 4',
+            'Nuggets 9',
+            'Nuggets 20',
+            'Coca-Cola M',
+            'Coca-Cola L',
+            'Sprite M',
+            'Fanta M',
+            'McFlurry Oreo',
+            'Sundae Caramel',
+            'Crousty Poulet',
+            "P'tit Wrap Ranch"
+        ];
+
+        // Récupérer les quantités depuis localStorage
+        function getQuantities() {
+            const saved = localStorage.getItem('stockMcdo');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return produits.reduce((acc, p) => ({...acc, [p]: 0}), {});
+        }
+
+        // Sauvegarder les quantités
+        function saveQuantities(quantities) {
+            localStorage.setItem('stockMcdo', JSON.stringify(quantities));
+        }
+
+        let quantities = getQuantities();
+
+        // Générer l'interface
+        function render() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            produits.forEach(produit => {
+                const item = document.createElement('div');
+                item.className = 'product-item';
+                item.innerHTML = `
+                    <div class="product-name">${produit}</div>
+                    <div class="quantity-controls">
+                        <button class="btn btn-minus" onclick="decrement('${produit}')">−</button>
+                        <div class="quantity">${quantities[produit]}</div>
+                        <button class="btn btn-plus" onclick="increment('${produit}')">+</button>
+                    </div>
+                `;
+                productList.appendChild(item);
+            });
+        }
+
+        function increment(produit) {
+            quantities[produit]++;
+            saveQuantities(quantities);
+            render();
+        }
+
+        function decrement(produit) {
+            if (quantities[produit] > 0) {
+                quantities[produit]--;
+                saveQuantities(quantities);
+                render();
+            }
+        }
+
+        // Initialiser l'affichage
+        render();
+    </script>
+</body>
+</html>
