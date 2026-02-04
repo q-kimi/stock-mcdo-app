@@ -5,392 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock McDo - Gestion des pertes</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        /* Écran de sélection catégorie */
-        .category-selector {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            text-align: center;
-        }
-        
-        .category-selector h1 {
-            font-size: 32px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-        
-        .category-selector p {
-            color: #666;
-            font-size: 14px;
-            font-weight: 300;
-            margin-bottom: 50px;
-        }
-        
-        .category-buttons {
-            display: grid;
-            gap: 16px;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .category-btn {
-            background: #111;
-            border: 1px solid #1a1a1a;
-            border-radius: 12px;
-            padding: 32px 24px;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 400;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-        }
-        
-        .category-btn:hover {
-            background: #151515;
-            border-color: #333;
-            transform: translateY(-2px);
-        }
-        
-        .category-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* Vue principale */
-        .main-view {
-            display: none;
-        }
-        
-        .main-view.active {
-            display: block;
-        }
-        
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 40px;
-            padding: 30px 0;
-        }
-        
-        .header-content {
-            flex: 1;
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        
-        .header p {
-            color: #666;
-            font-size: 14px;
-            font-weight: 300;
-        }
-        
-        .back-btn {
-            background: #1a1a1a;
-            border: 1px solid #222;
-            border-radius: 8px;
-            color: #999;
-            padding: 10px 18px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .back-btn:hover {
-            background: #222;
-            color: #fff;
-            border-color: #333;
-        }
-        
-        .product-list {
-            display: grid;
-            gap: 12px;
-        }
-        
-        .product-item {
-            background: #111;
-            border: 1px solid #1a1a1a;
-            border-radius: 8px;
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.2s ease;
-        }
-        
-        .product-item:hover {
-            background: #151515;
-            border-color: #222;
-        }
-        
-        .product-name {
-            color: #e0e0e0;
-            font-size: 15px;
-            font-weight: 400;
-            flex: 1;
-        }
-        
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        
-        .btn {
-            width: 36px;
-            height: 36px;
-            border: none;
-            border-radius: 6px;
-            background: #1a1a1a;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 300;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #222;
-        }
-        
-        .btn:hover {
-            background: #222;
-            border-color: #333;
-        }
-        
-        .btn:active {
-            transform: scale(0.95);
-        }
-        
-        .quantity {
-            font-size: 17px;
-            font-weight: 400;
-            color: #fff;
-            min-width: 32px;
-            text-align: center;
-            font-variant-numeric: tabular-nums;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #444;
-            font-size: 13px;
-            font-weight: 300;
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding: 12px;
-            }
-            
-            .category-selector h1 {
-                font-size: 24px;
-            }
-            
-            .category-btn {
-                padding: 24px 20px;
-                font-size: 16px;
-            }
-            
-            .header h1 {
-                font-size: 22px;
-            }
-            
-            .product-item {
-                padding: 14px 16px;
-            }
-            
-            .product-name {
-                font-size: 14px;
-            }
-            
-            .btn {
-                width: 32px;
-                height: 32px;
-                font-size: 16px;
-            }
-            
-            .quantity {
-                font-size: 15px;
-                min-width: 28px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .login-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
+        .login-box { background: #111; border: 1px solid #1a1a1a; border-radius: 12px; padding: 40px; width: 100%; max-width: 400px; }
+        .login-box h1 { font-size: 28px; font-weight: 300; text-align: center; margin-bottom: 8px; color: #fff; }
+        .login-box p { text-align: center; color: #666; font-size: 14px; margin-bottom: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #999; font-size: 14px; margin-bottom: 8px; }
+        .form-group input { width: 100%; background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; }
+        .form-group input:focus { outline: none; border-color: #333; }
+        .login-btn { width: 100%; background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 14px; color: #fff; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
+        .login-btn:hover { background: #222; border-color: #333; }
+        .error-message { color: #ff4444; font-size: 14px; text-align: center; margin-top: 16px; display: none; }
+        .app-container { display: none; }
+        .app-container.active { display: block; }
+        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; padding: 20px 0; }
+        .header h1 { font-size: 28px; font-weight: 300; color: #fff; }
+        .logout-btn { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 10px 18px; color: #999; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+        .logout-btn:hover { background: #222; color: #fff; border-color: #333; }
+        .category-selector { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
+        .category-selector h2 { font-size: 24px; font-weight: 300; color: #fff; margin-bottom: 12px; }
+        .category-selector p { color: #666; font-size: 14px; margin-bottom: 40px; }
+        .category-buttons { display: grid; gap: 16px; width: 100%; max-width: 400px; }
+        .category-btn { background: #111; border: 1px solid #1a1a1a; border-radius: 12px; padding: 32px 24px; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; }
+        .category-btn:hover { background: #151515; border-color: #333; transform: translateY(-2px); }
+        .product-view { display: none; }
+        .product-view.active { display: block; }
+        .product-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
+        .product-header h2 { font-size: 24px; font-weight: 300; color: #fff; }
+        .back-btn { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 10px 18px; color: #999; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+        .back-btn:hover { background: #222; color: #fff; border-color: #333; }
+        .product-list { display: grid; gap: 12px; }
+        .product-item { background: #111; border: 1px solid #1a1a1a; border-radius: 8px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .product-item:hover { background: #151515; border-color: #222; }
+        .product-name { color: #e0e0e0; font-size: 15px; }
+        .quantity-controls { display: flex; align-items: center; gap: 16px; }
+        .btn { width: 36px; height: 36px; border: 1px solid #222; border-radius: 6px; background: #1a1a1a; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
+        .btn:hover { background: #222; border-color: #333; }
+        .quantity { font-size: 17px; color: #fff; min-width: 32px; text-align: center; }
+        .footer { text-align: center; margin-top: 40px; padding: 20px; color: #444; font-size: 13px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Écran de sélection -->
-        <div class="category-selector" id="categorySelector">
-            <h1>Stock McDo</h1>
-            <p>Sélectionnez une catégorie</p>
-            <div class="category-buttons">
-                <button class="category-btn" onclick="selectCategory('cuisine')">
-                    🍳 Pertes Cuisine
-                </button>
-                <button class="category-btn" onclick="selectCategory('comptoir')">
-                    📦 Pertes Comptoir
-                </button>
+        <div class="login-container" id="loginScreen">
+            <div class="login-box">
+                <h1>Stock McDo</h1>
+                <p>Connectez-vous pour accéder à la gestion des stocks</p>
+                <form id="loginForm" onsubmit="return login(event)">
+                    <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="username" required></div>
+                    <div class="form-group"><label>Mot de passe</label><input type="password" id="password" required></div>
+                    <button type="submit" class="login-btn">Connexion</button>
+                    <div class="error-message" id="errorMessage">Identifiants incorrects</div>
+                </form>
             </div>
         </div>
-        
-        <!-- Vue principale -->
-        <div class="main-view" id="mainView">
-            <div class="header">
-                <div class="header-content">
-                    <h1 id="categoryTitle">Stock McDo</h1>
-                    <p id="categorySubtitle">Gestion des pertes</p>
-                </div>
-                <button class="back-btn" onclick="goBack()">← Retour</button>
-            </div>
-            
-            <div class="product-list" id="productList"></div>
-            
-            <div class="footer">
-                Données sauvegardées automatiquement
-            </div>
+        <div class="app-container" id="appContainer">
+            <div class="header"><h1>Stock McDo</h1><button class="logout-btn" onclick="logout()">Déconnexion</button></div>
+            <div class="category-selector" id="categorySelector"><h2>Sélectionnez une catégorie</h2><p>Choisissez le type de pertes à enregistrer</p><div class="category-buttons"><button class="category-btn" onclick="selectCategory('cuisine')">🍳 Perte Cuisine</button><button class="category-btn" onclick="selectCategory('comptoir')">📦 Perte Comptoir</button></div></div>
+            <div class="product-view" id="productView"><div class="product-header"><h2 id="categoryTitle">Pertes</h2><button class="back-btn" onclick="backToCategories()">← Retour</button></div><div class="product-list" id="productList"></div><div class="footer">Données sauvegardées automatiquement</div></div>
         </div>
     </div>
-
     <script>
+        const CREDENTIALS = { username: 'admin', password: 'admin' };
+        const produitsParCategorie = { cuisine: ['Big Mac', 'McChicken', 'Royal Deluxe', 'Frites M', 'Frites L', 'Nuggets 4', 'Nuggets 9', 'Nuggets 20', 'Crousty Poulet', "P'tit Wrap Ranch", 'Double Cheese', 'Filet-O-Fish'], comptoir: ['Coca-Cola M', 'Coca-Cola L', 'Sprite M', 'Fanta M', 'McFlurry Oreo', "McFlurry M&M's", 'Sundae Caramel', 'Sundae Chocolat', 'Milk-shake Vanille', 'Café', 'Cappuccino', 'Muffin'] };
         let currentCategory = null;
-        
-        const produitsParCategorie = {
-            cuisine: [
-                'Big Mac',
-                'McChicken',
-                'Royal Deluxe',
-                'Frites M',
-                'Frites L',
-                'Nuggets 4',
-                'Nuggets 9',
-                'Nuggets 20',
-                'Crousty Poulet',
-                "P'tit Wrap Ranch",
-                'Double Cheese',
-                'Filet-O-Fish'
-            ],
-            comptoir: [
-                'Coca-Cola M',
-                'Coca-Cola L',
-                'Sprite M',
-                'Fanta M',
-                'McFlurry Oreo',
-                'McFlurry M&M\'s',
-                'Sundae Caramel',
-                'Sundae Chocolat',
-                'Milk-shake Vanille',
-                'Café',
-                'Cappuccino',
-                'Muffin'
-            ]
-        };
-
-        function selectCategory(category) {
-            currentCategory = category;
-            document.getElementById('categorySelector').style.display = 'none';
-            document.getElementById('mainView').classList.add('active');
-            
-            // Mise à jour du titre
-            const titles = {
-                cuisine: { title: 'Pertes Cuisine', subtitle: 'Suivi des pertes en cuisine' },
-                comptoir: { title: 'Pertes Comptoir', subtitle: 'Suivi des pertes au comptoir' }
-            };
-            
-            document.getElementById('categoryTitle').textContent = titles[category].title;
-            document.getElementById('categorySubtitle').textContent = titles[category].subtitle;
-            
-            render();
-        }
-        
-        function goBack() {
-            currentCategory = null;
-            document.getElementById('categorySelector').style.display = 'flex';
-            document.getElementById('mainView').classList.remove('active');
-        }
-
-        function getQuantities() {
-            const saved = localStorage.getItem(`stockMcdo_${currentCategory}`);
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            const produits = produitsParCategorie[currentCategory] || [];
-            return produits.reduce((acc, p) => ({...acc, [p]: 0}), {});
-        }
-
-        function saveQuantities(quantities) {
-            localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities));
-        }
-
-        function render() {
-            if (!currentCategory) return;
-            
-            const quantities = getQuantities();
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
-            
-            const produits = produitsParCategorie[currentCategory];
-
-            produits.forEach(produit => {
-                const item = document.createElement('div');
-                item.className = 'product-item';
-                item.innerHTML = `
-                    <div class="product-name">${produit}</div>
-                    <div class="quantity-controls">
-                        <button class="btn" onclick="decrement('${produit}')">−</button>
-                        <div class="quantity">${quantities[produit]}</div>
-                        <button class="btn" onclick="increment('${produit}')">+</button>
-                    </div>
-                `;
-                productList.appendChild(item);
-            });
-        }
-
-        function increment(produit) {
-            const quantities = getQuantities();
-            quantities[produit]++;
-            saveQuantities(quantities);
-            render();
-        }
-
-        function decrement(produit) {
-            const quantities = getQuantities();
-            if (quantities[produit] > 0) {
-                quantities[produit]--;
-                saveQuantities(quantities);
-                render();
-            }
-        }
+        function checkAuth() { const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; if (isLoggedIn) { showApp(); } else { showLogin(); } }
+        function showLogin() { document.getElementById('loginScreen').style.display = 'flex'; document.getElementById('appContainer').classList.remove('active'); }
+        function showApp() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('appContainer').classList.add('active'); document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
+        function login(event) { event.preventDefault(); const username = document.getElementById('username').value; const password = document.getElementById('password').value; const errorMessage = document.getElementById('errorMessage'); if (username === CREDENTIALS.username && password === CREDENTIALS.password) { localStorage.setItem('isLoggedIn', 'true'); errorMessage.style.display = 'none'; showApp(); } else { errorMessage.style.display = 'block'; } return false; }
+        function logout() { localStorage.removeItem('isLoggedIn'); currentCategory = null; showLogin(); }
+        function selectCategory(category) { currentCategory = category; document.getElementById('categorySelector').style.display = 'none'; document.getElementById('productView').classList.add('active'); const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' }; document.getElementById('categoryTitle').textContent = titles[category]; render(); }
+        function backToCategories() { currentCategory = null; document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
+        function getQuantities() { const saved = localStorage.getItem(`stockMcdo_${currentCategory}`); if (saved) { return JSON.parse(saved); } const produits = produitsParCategorie[currentCategory] || []; return produits.reduce((acc, p) => ({...acc, [p]: 0}), {}); }
+        function saveQuantities(quantities) { localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities)); }
+        function render() { if (!currentCategory) return; const quantities = getQuantities(); const productList = document.getElementById('productList'); productList.innerHTML = ''; const produits = produitsParCategorie[currentCategory]; produits.forEach(produit => { const item = document.createElement('div'); item.className = 'product-item'; item.innerHTML = `<div class="product-name">${produit}</div><div class="quantity-controls"><button class="btn" onclick="decrement('${produit}')">−</button><div class="quantity">${quantities[produit]}</div><button class="btn" onclick="increment('${produit}')">+</button></div>`; productList.appendChild(item); }); }
+        function increment(produit) { const quantities = getQuantities(); quantities[produit]++; saveQuantities(quantities); render(); }
+        function decrement(produit) { const quantities = getQuantities(); if (quantities[produit] > 0) { quantities[produit]--; saveQuantities(quantities); render(); } }
+        window.onload = checkAuth;
     </script>
 </body>
 </html>
