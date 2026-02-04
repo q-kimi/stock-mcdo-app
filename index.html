@@ -46,6 +46,9 @@
         .btn:hover { background: #222; border-color: #333; }
         .quantity { font-size: 17px; color: #fff; min-width: 32px; text-align: center; }
         .footer { text-align: center; margin-top: 40px; padding: 20px; color: #444; font-size: 13px; }
+                .login-btn.loading { opacity: 0.7; cursor: not-allowed; }
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -76,6 +79,33 @@
         function showLogin() { document.getElementById('loginScreen').style.display = 'flex'; document.getElementById('appContainer').classList.remove('active'); }
         function showApp() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('appContainer').classList.add('active'); document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
         function login(event) { event.preventDefault(); const username = document.getElementById('username').value; const password = document.getElementById('password').value; const errorMessage = document.getElementById('errorMessage'); if (username === CREDENTIALS.username && password === CREDENTIALS.password) { localStorage.setItem('isLoggedIn', 'true'); errorMessage.style.display = 'none'; showApp(); } else { errorMessage.style.display = 'block'; } return false; }
+            const username = document.getElementById('username').value; const password = document.getElementById('password').value;
+    const loginBtn = document.querySelector('.login-btn');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // Afficher le spinner
+    loginBtn.disabled = true;
+    loginBtn.classList.add('loading');
+    const originalText = loginBtn.innerHTML;
+    loginBtn.innerHTML = '<div class="spinner"></div>';
+    errorMessage.style.display = 'none';
+    
+    // Attendre 2 secondes
+    setTimeout(() => {
+        82
+            .username && password === CREDENTIALS.password) {
+            localStorage.setItem('isLoggedIn', 'true');
+            currentCategory = null;
+            showApp();
+        } else {
+            errorMessage.style.display = 'block';
+            loginBtn.innerHTML = originalText;
+            loginBtn.disabled = false;
+            loginBtn.classList.remove('loading');
+        }
+    }, 2000);
+    
+    return false;
         function logout() { localStorage.removeItem('isLoggedIn'); currentCategory = null; showLogin(); }
         function selectCategory(category) { currentCategory = category; document.getElementById('categorySelector').style.display = 'none'; document.getElementById('productView').classList.add('active'); const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' }; document.getElementById('categoryTitle').textContent = titles[category]; render(); }
         function backToCategories() { currentCategory = null; document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
