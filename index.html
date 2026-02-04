@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock McDo</title>
+    <title>Stock McDo - Gestion des pertes</title>
     <style>
         * {
             margin: 0;
@@ -24,24 +24,111 @@
             margin: 0 auto;
         }
         
-        .header {
+        /* Écran de sélection catégorie */
+        .category-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
             text-align: center;
-            margin-bottom: 40px;
-            padding: 30px 0;
         }
         
-        .header h1 {
+        .category-selector h1 {
             font-size: 32px;
             font-weight: 300;
             letter-spacing: 1px;
             color: #fff;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .category-selector p {
+            color: #666;
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 50px;
+        }
+        
+        .category-buttons {
+            display: grid;
+            gap: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .category-btn {
+            background: #111;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 32px 24px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .category-btn:hover {
+            background: #151515;
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+        
+        .category-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Vue principale */
+        .main-view {
+            display: none;
+        }
+        
+        .main-view.active {
+            display: block;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 4px;
         }
         
         .header p {
             color: #666;
             font-size: 14px;
             font-weight: 300;
+        }
+        
+        .back-btn {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 8px;
+            color: #999;
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            background: #222;
+            color: #fff;
+            border-color: #333;
         }
         
         .product-list {
@@ -127,8 +214,17 @@
                 padding: 12px;
             }
             
-            .header h1 {
+            .category-selector h1 {
                 font-size: 24px;
+            }
+            
+            .category-btn {
+                padding: 24px 20px;
+                font-size: 16px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
             }
             
             .product-item {
@@ -154,55 +250,116 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <!-- Écran de sélection -->
+        <div class="category-selector" id="categorySelector">
             <h1>Stock McDo</h1>
-            <p>Gestion des stocks</p>
+            <p>Sélectionnez une catégorie</p>
+            <div class="category-buttons">
+                <button class="category-btn" onclick="selectCategory('cuisine')">
+                    🍳 Pertes Cuisine
+                </button>
+                <button class="category-btn" onclick="selectCategory('comptoir')">
+                    📦 Pertes Comptoir
+                </button>
+            </div>
         </div>
         
-        <div class="product-list" id="productList"></div>
-        
-        <div class="footer">
-            Données sauvegardées automatiquement
+        <!-- Vue principale -->
+        <div class="main-view" id="mainView">
+            <div class="header">
+                <div class="header-content">
+                    <h1 id="categoryTitle">Stock McDo</h1>
+                    <p id="categorySubtitle">Gestion des pertes</p>
+                </div>
+                <button class="back-btn" onclick="goBack()">← Retour</button>
+            </div>
+            
+            <div class="product-list" id="productList"></div>
+            
+            <div class="footer">
+                Données sauvegardées automatiquement
+            </div>
         </div>
     </div>
 
     <script>
-        const produits = [
-            'Big Mac',
-            'McChicken',
-            'Royal Deluxe',
-            'Frites M',
-            'Frites L',
-            'Nuggets 4',
-            'Nuggets 9',
-            'Nuggets 20',
-            'Coca-Cola M',
-            'Coca-Cola L',
-            'Sprite M',
-            'Fanta M',
-            'McFlurry Oreo',
-            'Sundae Caramel',
-            'Crousty Poulet',
-            "P'tit Wrap Ranch"
-        ];
+        let currentCategory = null;
+        
+        const produitsParCategorie = {
+            cuisine: [
+                'Big Mac',
+                'McChicken',
+                'Royal Deluxe',
+                'Frites M',
+                'Frites L',
+                'Nuggets 4',
+                'Nuggets 9',
+                'Nuggets 20',
+                'Crousty Poulet',
+                "P'tit Wrap Ranch",
+                'Double Cheese',
+                'Filet-O-Fish'
+            ],
+            comptoir: [
+                'Coca-Cola M',
+                'Coca-Cola L',
+                'Sprite M',
+                'Fanta M',
+                'McFlurry Oreo',
+                'McFlurry M&M\'s',
+                'Sundae Caramel',
+                'Sundae Chocolat',
+                'Milk-shake Vanille',
+                'Café',
+                'Cappuccino',
+                'Muffin'
+            ]
+        };
+
+        function selectCategory(category) {
+            currentCategory = category;
+            document.getElementById('categorySelector').style.display = 'none';
+            document.getElementById('mainView').classList.add('active');
+            
+            // Mise à jour du titre
+            const titles = {
+                cuisine: { title: 'Pertes Cuisine', subtitle: 'Suivi des pertes en cuisine' },
+                comptoir: { title: 'Pertes Comptoir', subtitle: 'Suivi des pertes au comptoir' }
+            };
+            
+            document.getElementById('categoryTitle').textContent = titles[category].title;
+            document.getElementById('categorySubtitle').textContent = titles[category].subtitle;
+            
+            render();
+        }
+        
+        function goBack() {
+            currentCategory = null;
+            document.getElementById('categorySelector').style.display = 'flex';
+            document.getElementById('mainView').classList.remove('active');
+        }
 
         function getQuantities() {
-            const saved = localStorage.getItem('stockMcdo');
+            const saved = localStorage.getItem(`stockMcdo_${currentCategory}`);
             if (saved) {
                 return JSON.parse(saved);
             }
+            const produits = produitsParCategorie[currentCategory] || [];
             return produits.reduce((acc, p) => ({...acc, [p]: 0}), {});
         }
 
         function saveQuantities(quantities) {
-            localStorage.setItem('stockMcdo', JSON.stringify(quantities));
+            localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities));
         }
 
-        let quantities = getQuantities();
-
         function render() {
+            if (!currentCategory) return;
+            
+            const quantities = getQuantities();
             const productList = document.getElementById('productList');
             productList.innerHTML = '';
+            
+            const produits = produitsParCategorie[currentCategory];
 
             produits.forEach(produit => {
                 const item = document.createElement('div');
@@ -220,20 +377,20 @@
         }
 
         function increment(produit) {
+            const quantities = getQuantities();
             quantities[produit]++;
             saveQuantities(quantities);
             render();
         }
 
         function decrement(produit) {
+            const quantities = getQuantities();
             if (quantities[produit] > 0) {
                 quantities[produit]--;
                 saveQuantities(quantities);
                 render();
             }
         }
-
-        render();
     </script>
 </body>
 </html>
