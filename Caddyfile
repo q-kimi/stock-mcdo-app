@@ -1,0 +1,14 @@
+:8080 {
+	root * /app
+	file_server
+	encode gzip
+
+	# Disable directory browsing
+	file_server browse
+
+	# Logging
+	log {
+		output stdout
+		format console
+	}
+}
