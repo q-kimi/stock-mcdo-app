@@ -1,3 +1,326 @@
 /* Fichier central pour les styles globaux du projet Stock McDo App */
 
-/* ...styles à déplacer depuis index.html... */
+:root {
+	--main-bg: #0a0a0a;
+	--main-fg: #e0e0e0;
+	--primary: #e53935;
+	--secondary: #111;
+	--border: #1a1a1a;
+	--border-hover: #333;
+	--accent: #ffe082;
+	--danger: #ff4444;
+	--input-bg: #1a1a1a;
+	--input-border: #222;
+	--input-focus: #333;
+	--footer-fg: #444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	background: var(--main-bg);
+	color: var(--main-fg);
+	min-height: 100vh;
+	padding: 20px;
+	user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+.container {
+	max-width: 700px;
+	margin: 0 auto;
+}
+.login-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 80vh;
+	user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+.login-box {
+	background: var(--secondary);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 40px;
+	width: 100%;
+	max-width: 400px;
+}
+.login-box h1 {
+	font-size: 28px;
+	font-weight: 300;
+	text-align: center;
+	margin-bottom: 8px;
+	color: #fff;
+}
+.login-box p {
+	text-align: center;
+	color: #666;
+	font-size: 14px;
+	margin-bottom: 32px;
+}
+.form-group {
+	margin-bottom: 20px;
+}
+.form-group label {
+	display: block;
+	color: #999;
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+.form-group input {
+	width: 100%;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 8px;
+	padding: 12px 16px;
+	color: #fff;
+	font-size: 15px;
+}
+.form-group input:focus {
+	outline: none;
+	border-color: var(--input-focus);
+}
+.login-btn {
+	width: 100%;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 8px;
+	padding: 14px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.login-btn:hover, .login-btn:focus {
+	background: #222;
+	border-color: var(--input-focus);
+}
+.login-btn:focus {
+	outline: 2px solid var(--primary);
+}
+.error-message {
+	color: var(--danger);
+	font-size: 14px;
+	text-align: center;
+	margin-top: 16px;
+	display: none;
+}
+.app-container { display: none; }
+.app-container.active { display: block; }
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 40px;
+	padding: 20px 0;
+}
+.header h1 {
+	font-size: 28px;
+	font-weight: 300;
+	color: #fff;
+}
+.logout-btn {
+	background: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 8px;
+	padding: 10px 18px;
+	color: #999;
+	font-size: 14px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.logout-btn:hover, .logout-btn:focus {
+	background: #222;
+	color: #fff;
+	border-color: var(--input-focus);
+}
+.logout-btn:focus {
+	outline: 2px solid var(--primary);
+}
+.category-selector {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	text-align: center;
+}
+.category-selector h2 {
+	font-size: 24px;
+	font-weight: 300;
+	color: #fff;
+	margin-bottom: 12px;
+}
+.category-selector p {
+	color: #666;
+	font-size: 14px;
+	margin-bottom: 40px;
+}
+.category-buttons {
+	display: grid;
+	gap: 16px;
+	width: 100%;
+	max-width: 400px;
+}
+.category-btn {
+	background: var(--secondary);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 32px 24px;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.category-btn:hover, .category-btn:focus {
+	background: #151515;
+	border-color: var(--border-hover);
+	transform: translateY(-2px);
+}
+.category-btn:focus {
+	outline: 2px solid var(--primary);
+}
+.product-view { display: none; }
+.product-view.active { display: block; }
+.product-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 30px;
+}
+.product-header h2 {
+	font-size: 24px;
+	font-weight: 300;
+	color: #fff;
+}
+.back-btn {
+	background: var(--input-bg);
+	border: 1px solid var(--input-border);
+	border-radius: 8px;
+	padding: 10px 18px;
+	color: #999;
+	font-size: 14px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.back-btn:hover, .back-btn:focus {
+	background: #222;
+	color: #fff;
+	border-color: var(--input-focus);
+}
+.back-btn:focus {
+	outline: 2px solid var(--primary);
+}
+.product-list {
+	display: grid;
+	gap: 12px;
+}
+.product-item {
+	background: var(--secondary);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	padding: 18px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.product-item:hover {
+	background: #151515;
+	border-color: #222;
+}
+.product-name {
+	color: var(--main-fg);
+	font-size: 15px;
+}
+.quantity-controls {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+.btn {
+	width: 36px;
+	height: 36px;
+	border: 1px solid var(--input-border);
+	border-radius: 6px;
+	background: var(--input-bg);
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.btn:hover, .btn:focus {
+	background: #222;
+	border-color: var(--input-focus);
+	color: #fff;
+}
+.btn:focus {
+	outline: 2px solid var(--primary);
+}
+.btn-bulk {
+	width: 44px;
+	height: 36px;
+	font-size: 15px;
+	margin-left: 2px;
+	margin-right: 2px;
+	background: #222;
+	color: #fff;
+	border: 1px solid var(--border-hover);
+	transition: background 0.2s, color 0.2s;
+}
+.btn-bulk:hover, .btn-bulk:focus {
+	background: #333;
+	color: #fff;
+}
+.btn-bulk:focus {
+	outline: 2px solid var(--primary);
+}
+input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	min-width: 16px;
+	min-height: 16px;
+	accent-color: var(--primary);
+	vertical-align: middle;
+	box-sizing: border-box;
+}
+.quantity {
+	font-size: 17px;
+	color: #fff;
+	min-width: 32px;
+	text-align: center;
+}
+.footer {
+	text-align: center;
+	margin-top: 40px;
+	padding: 20px;
+	color: var(--footer-fg);
+	font-size: 13px;
+}
+.login-btn.loading {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+.spinner {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	border-top-color: transparent;
+	animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 600px) {
+	.container { max-width: 98vw; padding: 0 2vw; }
+	.login-box { padding: 20px; }
+	.category-btn { padding: 18px 8px; font-size: 15px; }
+	.product-header h2 { font-size: 18px; }
+	.header h1 { font-size: 20px; }
+}

@@ -4,64 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock McDo - Gestion des pertes</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; min-height: 100vh; padding: 20px; user-select: none; -webkit-user-select: none; -ms-user-select: none; }
-        .container { max-width: 700px; margin: 0 auto; }
-        .login-container { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; user-select: none; -webkit-user-select: none; -ms-user-select: none; }
-        .login-box { background: #111; border: 1px solid #1a1a1a; border-radius: 12px; padding: 40px; width: 100%; max-width: 400px; }
-        .login-box h1 { font-size: 28px; font-weight: 300; text-align: center; margin-bottom: 8px; color: #fff; }
-        .login-box p { text-align: center; color: #666; font-size: 14px; margin-bottom: 32px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; color: #999; font-size: 14px; margin-bottom: 8px; }
-        .form-group input { width: 100%; background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 12px 16px; color: #fff; font-size: 15px; }
-        .form-group input:focus { outline: none; border-color: #333; }
-        .login-btn { width: 100%; background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 14px; color: #fff; font-size: 16px; cursor: pointer; transition: all 0.2s ease; }
-        .login-btn:hover { background: #222; border-color: #333; }
-        .error-message { color: #ff4444; font-size: 14px; text-align: center; margin-top: 16px; display: none; }
-        .app-container { display: none; }
-        .app-container.active { display: block; }
-        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; padding: 20px 0; }
-        .header h1 { font-size: 28px; font-weight: 300; color: #fff; }
-        .logout-btn { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 10px 18px; color: #999; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
-        .logout-btn:hover { background: #222; color: #fff; border-color: #333; }
-        .category-selector { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
-        .category-selector h2 { font-size: 24px; font-weight: 300; color: #fff; margin-bottom: 12px; }
-        .category-selector p { color: #666; font-size: 14px; margin-bottom: 40px; }
-        .category-buttons { display: grid; gap: 16px; width: 100%; max-width: 400px; }
-        .category-btn { background: #111; border: 1px solid #1a1a1a; border-radius: 12px; padding: 32px 24px; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; }
-        .category-btn:hover { background: #151515; border-color: #333; transform: translateY(-2px); }
-        .product-view { display: none; }
-        .product-view.active { display: block; }
-        .product-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
-        .product-header h2 { font-size: 24px; font-weight: 300; color: #fff; }
-        .back-btn { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 10px 18px; color: #999; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
-        .back-btn:hover { background: #222; color: #fff; border-color: #333; }
-        .product-list { display: grid; gap: 12px; }
-        .product-item { background: #111; border: 1px solid #1a1a1a; border-radius: 8px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
-        .product-item:hover { background: #151515; border-color: #222; }
-        .product-name { color: #e0e0e0; font-size: 15px; }
-        .quantity-controls { display: flex; align-items: center; gap: 16px; }
-        .btn { width: 36px; height: 36px; border: 1px solid #222; border-radius: 6px; background: #1a1a1a; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
-        .btn:hover { background: #222; border-color: #333; }
-        .btn-bulk { width: 44px; height: 36px; font-size: 15px; margin-left: 2px; margin-right: 2px; background: #222; color: #fff; border: 1px solid #333; transition: background 0.2s, color 0.2s; }
-        .btn-bulk:hover { background: #333; color: #fff; }
-        /* Fix proportions of checkbox when checked */
-        input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            min-width: 16px;
-            min-height: 16px;
-            accent-color: #e53935;
-            vertical-align: middle;
-            box-sizing: border-box;
-        }
-        .quantity { font-size: 17px; color: #fff; min-width: 32px; text-align: center; }
-        .footer { text-align: center; margin-top: 40px; padding: 20px; color: #444; font-size: 13px; }
-                .login-btn.loading { opacity: 0.7; cursor: not-allowed; }
-        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #fff; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <div class="container">
@@ -126,157 +69,51 @@
         }
 
         function login(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-            const loginBtn = document.querySelector('.login-btn');
-            const errorMessage = document.getElementById('errorMessage');
-            const originalText = loginBtn.innerHTML;
-
-
-            // Afficher le spinner, texte d'info et désactiver le bouton
-            loginBtn.disabled = true;
-            loginBtn.classList.add('loading');
-            // Liste de messages cycliques
-            let loadingMessages = [
-                'Chargement des modules...',
-                'Initialisation de la base...',
-                'Vérification des accès...',
-                'Connexion sécurisée...',
-                'Comptage des pertes en cours...',
-                'Recherche de frites disparues...',
-                'Recherche de nuggets égarés...',
-                'Recherche de steaks 10:1 perdus...',
-                'Recherche de cornichons disparus...',
-                'Analyse du ketchup restant...'
-            ];
-            // Mélanger l'ordre des messages à chaque login
-            loadingMessages = loadingMessages
-                .map(value => ({ value, sort: Math.random() }))
-                .sort((a, b) => a.sort - b.sort)
-                .map(({ value }) => value);
-            let msgIndex = 0;
-            loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="spinner"></div><div id='loginLoadingMsg' style="font-size:12px;color:#bbb;">${loadingMessages[0]}</div></div>`;
-            errorMessage.style.display = 'none';
-            // Changement cyclique du message toutes les 700ms
-            let msgInterval = setInterval(() => {
-                msgIndex = (msgIndex + 1) % loadingMessages.length;
-                const msgDiv = document.getElementById('loginLoadingMsg');
-                if (msgDiv) msgDiv.textContent = loadingMessages[msgIndex];
-            }, 700);
-
-            setTimeout(() => {
-                clearInterval(msgInterval);
-                if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-                    localStorage.setItem('isLoggedIn', 'true');
-                    // Sauvegarde ou suppression des identifiants selon la case
-                    if (rememberMe) {
-                        localStorage.setItem('rememberLogin', JSON.stringify({ username, password }));
-                    } else {
-                        localStorage.removeItem('rememberLogin');
-                    }
-                    errorMessage.style.display = 'none';
-                    loginBtn.innerHTML = originalText;
-                    loginBtn.disabled = false;
-                    loginBtn.classList.remove('loading');
-                    currentCategory = null;
-                    showApp();
-                } else {
-                    errorMessage.style.display = 'block';
-                    loginBtn.innerHTML = originalText;
-                    loginBtn.disabled = false;
-                    loginBtn.classList.remove('loading');
-                }
-            }, 2000);
-            return false;
-        }
-
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            currentCategory = null;
-            showLogin();
-        }
-
-        function selectCategory(category) {
-            currentCategory = category;
-            document.getElementById('categorySelector').style.display = 'none';
-            document.getElementById('productView').classList.add('active');
-            const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' };
-            document.getElementById('categoryTitle').textContent = titles[category];
-            render();
-        }
-
-        function backToCategories() {
-            currentCategory = null;
-            document.getElementById('categorySelector').style.display = 'flex';
-            document.getElementById('productView').classList.remove('active');
-        }
-
-        function getQuantities() {
-            const saved = localStorage.getItem(`stockMcdo_${currentCategory}`);
-            if (saved) {
-                return JSON.parse(saved);
-            }
-            const produits = produitsParCategorie[currentCategory] || [];
-            return produits.reduce((acc, p) => ({ ...acc, [p]: 0 }), {});
-        }
-
-        function saveQuantities(quantities) {
-            localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities));
-        }
-
-        function render() {
-            if (!currentCategory) return;
-            const quantities = getQuantities();
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
-            const produits = produitsParCategorie[currentCategory];
-            produits.forEach(produit => {
-                const item = document.createElement('div');
-                item.className = 'product-item';
-                item.innerHTML = `
-                    <div class="product-name">${produit}</div>
-                    <div class="quantity-controls">
-                        <button class="btn" onclick="decrement('${produit}')">−</button>
-                        <button class="btn btn-bulk" onclick="changeQuantity('${produit}', 5)">+5</button>
-                        <button class="btn btn-bulk" onclick="changeQuantity('${produit}', 10)">+10</button>
-                        <div class="quantity">${quantities[produit]}</div>
-                        <button class="btn" onclick="increment('${produit}')">+</button>
+            <main class="container">
+                <section class="login-container" id="loginScreen" aria-label="Connexion">
+                    <div class="login-box">
+                        <h1>Stock McDo</h1>
+                        <p>Connectez-vous pour accéder à la gestion des stocks</p>
+                        <form id="loginForm" onsubmit="return false;" aria-labelledby="loginTitle">
+                            <div class="form-group">
+                                <label for="username">Nom d'utilisateur</label>
+                                <input type="text" id="username" required autocomplete="username" aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" id="password" required autocomplete="current-password" aria-required="true">
+                            </div>
+                            <div style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                                <input type="checkbox" id="rememberMe" style="accent-color:#e53935; width:16px; height:16px;">
+                                <label for="rememberMe" style="font-size:13px; color:#bbb; cursor:pointer;">Se souvenir de moi</label>
+                            </div>
+                            <button type="submit" class="login-btn" aria-label="Connexion">Connexion</button>
+                            <div class="error-message" id="errorMessage" aria-live="polite">Identifiants incorrects</div>
+                        </form>
                     </div>
-                `;
-                productList.appendChild(item);
-            });
-        }
-
-        // Ajout de la fonction pour les boutons bulk (portée globale)
-        window.changeQuantity = function(produit, amount) {
-            const quantities = getQuantities();
-            if (!currentCategory || !(produit in quantities)) return;
-            quantities[produit] = (quantities[produit] || 0) + amount;
-            if (quantities[produit] < 0) quantities[produit] = 0;
-            saveQuantities(quantities);
-            render();
-        }
-        }
-
-        function increment(produit) {
-            const quantities = getQuantities();
-            quantities[produit]++;
-            saveQuantities(quantities);
-            render();
-        }
-
-        function decrement(produit) {
-            const quantities = getQuantities();
-            if (quantities[produit] > 0) {
-                quantities[produit]--;
-                saveQuantities(quantities);
-                render();
-            }
-        }
-
-        window.onload = checkAuth;
-    </script>
-</body>
-</html>
+                </section>
+                <section class="app-container" id="appContainer" aria-label="Application">
+                    <header class="header">
+                        <h1>Stock McDo</h1>
+                        <button class="logout-btn" id="logoutBtn" aria-label="Déconnexion">Déconnexion</button>
+                    </header>
+                    <section class="category-selector" id="categorySelector" aria-label="Sélection de catégorie">
+                        <h2>Sélectionnez une catégorie</h2>
+                        <p>Choisissez le type de pertes à enregistrer</p>
+                        <div class="category-buttons">
+                            <button class="category-btn" data-category="cuisine" aria-label="Perte Cuisine">🍳 Perte Cuisine</button>
+                            <button class="category-btn" data-category="comptoir" aria-label="Perte Comptoir">📦 Perte Comptoir</button>
+                        </div>
+                    </section>
+                    <section class="product-view" id="productView" aria-label="Liste des produits">
+                        <div class="product-header">
+                            <h2 id="categoryTitle">Pertes</h2>
+                            <button class="back-btn" id="backBtn" aria-label="Retour">← Retour</button>
+                        </div>
+                        <div class="product-list" id="productList"></div>
+                        <footer class="footer">Données sauvegardées automatiquement</footer>
+                    </section>
+                </section>
+            </main>
+            <script src="js/main.js"></script>
+            ];
