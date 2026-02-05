@@ -9,10 +9,25 @@
 	text-align: center;
 	outline: none;
 	margin: 0 2px;
+	/* Supprimer les flèches sur Chrome, Safari, Edge */
+	-webkit-appearance: none;
+	-moz-appearance: textfield;
+	appearance: textfield;
 }
 .quantity-input:focus {
-	border-color: var(--primary);
+	border-color: var(--input-focus);
 	background: #181818;
+	outline: none;
+}
+/* Supprimer les flèches sur Chrome */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+/* Supprimer les flèches sur Firefox */
+.quantity-input[type=number] {
+	-moz-appearance: textfield;
 }
 /* Fichier central pour les styles globaux du projet MedalBot - Pertes */
 
