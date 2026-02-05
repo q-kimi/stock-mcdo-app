@@ -1,66 +1,48 @@
-# Stock McDo App
+
+# Stock Web App
 
 ## Description
-Application Flutter simple pour la gestion des stocks McDonald's.
+Application web simple pour la gestion de stocks.
 
-### Fonctionnalités
-- Liste des produits avec quantités
-- Boutons + et - pour ajuster les stocks
-- Interface ultra-simple d'utilisation
-- Sauvegarde locale des données
+### Fonctionnalités principales
+- Liste de produits avec quantités
+- Boutons +, - , +5, +10 pour ajuster rapidement les stocks
+- Interface minimaliste et rapide
+- Sauvegarde locale des données (navigateur)
+- Connexion utilisateur (identifiants par défaut)
+- Mode sombre natif
 
-## Installation
+## Installation & lancement
 
-### Prérequis
-- Flutter SDK (version 3.0+)
-- Android Studio ou VS Code
-
-### Étapes
-
-1. Clone le dépôt :
+1. Cloner le dépôt :
 ```bash
-git clone https://github.com/q-kimi/stock-mcdo-app.git
-cd stock-mcdo-app
+git clone <repo-url>
+cd stock-web-app
 ```
 
-2. Installe les dépendances :
-```bash
-flutter pub get
-```
+2. Ouvrir le fichier `index.html` dans un navigateur moderne
 
-3. Lance l'app :
-```bash
-flutter run
-```
-
-4. Génère l'APK pour tablette :
-```bash
-flutter build apk --release
-```
-
-## Utilisation
-
-1. Ouvre l'app sur ta tablette
-2. Consulte la liste des produits
-3. Utilise les boutons + et - pour ajuster les quantités
-4. Les données sont sauvegardées automatiquement
+Ou déployer le dossier sur un hébergement statique (GitHub Pages, Netlify, etc.)
 
 ## Structure du projet
 
 ```
-stock-mcdo-app/
-├── lib/
-│   └── main.dart          # Code principal de l'app
-├── pubspec.yaml          # Dépendances Flutter
-└── README.md             # Documentation
+stock-web-app/
+├── css/
+│   └── main.css         # Styles globaux
+├── js/
+│   └── main.js          # Logique principale
+├── pages/               # (vues additionnelles)
+├── favicon.ico          # Icône du site
+├── index.html           # Page principale
+└── README.md            # Documentation
 ```
 
 ## Technologies
 
-- Flutter 3.x
-- Dart
-- Material Design
+- HTML5 / CSS3
+- JavaScript (ES6+)
 
 ## Licence
 
-Projet privé - Usage interne McDonald's Bapaume
+Projet privé - Usage interne
