@@ -1,4 +1,4 @@
-// Fichier central pour les fonctions JS du projet Stock McDo App
+// Fichier central pour les fonctions JS du projet MedalBot - Pertes
 
 const CREDENTIALS = { username: 'admin', password: 'admin' };
 
