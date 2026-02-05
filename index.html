@@ -105,13 +105,35 @@
             const errorMessage = document.getElementById('errorMessage');
             const originalText = loginBtn.innerHTML;
 
-            // Afficher le spinner et désactiver le bouton
+
+            // Afficher le spinner, texte d'info et désactiver le bouton
             loginBtn.disabled = true;
             loginBtn.classList.add('loading');
-            loginBtn.innerHTML = '<div class="spinner"></div>';
+            // Liste de messages cycliques
+            const loadingMessages = [
+                'Chargement des modules...',
+                'Initialisation de la base...',
+                'Vérification des accès...',
+                'Connexion sécurisée...',
+                'Comptage des pertes en cours...',
+                'Recherche de frites disparues...',
+                'Recherche de nuggets égarés...',
+                'Recherche de steaks 10:1 perdus...',
+                'Recherche de cornichons disparus...',
+                'Analyse du ketchup restant...'
+            ];
+            let msgIndex = 0;
+            loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="spinner"></div><div id='loginLoadingMsg' style="font-size:12px;color:#bbb;">${loadingMessages[0]}</div></div>`;
             errorMessage.style.display = 'none';
+            // Changement cyclique du message toutes les 700ms
+            let msgInterval = setInterval(() => {
+                msgIndex = (msgIndex + 1) % loadingMessages.length;
+                const msgDiv = document.getElementById('loginLoadingMsg');
+                if (msgDiv) msgDiv.textContent = loadingMessages[msgIndex];
+            }, 700);
 
             setTimeout(() => {
+                clearInterval(msgInterval);
                 if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
                     localStorage.setItem('isLoggedIn', 'true');
                     errorMessage.style.display = 'none';
