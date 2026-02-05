@@ -44,6 +44,8 @@
         .quantity-controls { display: flex; align-items: center; gap: 16px; }
         .btn { width: 36px; height: 36px; border: 1px solid #222; border-radius: 6px; background: #1a1a1a; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .btn:hover { background: #222; border-color: #333; }
+        .btn-bulk { width: 44px; height: 36px; font-size: 15px; margin-left: 2px; margin-right: 2px; background: #222; color: #ffe082; border: 1px solid #333; }
+        .btn-bulk:hover { background: #333; color: #fffde7; }
         .quantity { font-size: 17px; color: #fff; min-width: 32px; text-align: center; }
         .footer { text-align: center; margin-top: 40px; padding: 20px; color: #444; font-size: 13px; }
                 .login-btn.loading { opacity: 0.7; cursor: not-allowed; }
@@ -58,8 +60,12 @@
                 <h1>Stock McDo</h1>
                 <p>Connectez-vous pour accéder à la gestion des stocks</p>
                 <form id="loginForm" onsubmit="return login(event)">
-                    <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="username" required></div>
-                    <div class="form-group"><label>Mot de passe</label><input type="password" id="password" required></div>
+                    <div class="form-group"><label>Nom d'utilisateur</label><input type="text" id="username" required autocomplete="username"></div>
+                    <div class="form-group"><label>Mot de passe</label><input type="password" id="password" required autocomplete="current-password"></div>
+                    <div style="margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" id="rememberMe" style="accent-color:#e53935; width:16px; height:16px;">
+                        <label for="rememberMe" style="font-size:13px; color:#bbb; cursor:pointer;">Se souvenir de moi</label>
+                    </div>
                     <button type="submit" class="login-btn">Connexion</button>
                     <div class="error-message" id="errorMessage">Identifiants incorrects</div>
                 </form>
@@ -78,6 +84,16 @@
 
         function checkAuth() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            // Pré-remplir les champs si rememberMe est activé
+            const savedLogin = localStorage.getItem('rememberLogin');
+            if (savedLogin) {
+                try {
+                    const creds = JSON.parse(savedLogin);
+                    document.getElementById('username').value = creds.username || '';
+                    document.getElementById('password').value = creds.password || '';
+                    document.getElementById('rememberMe').checked = true;
+                } catch(e) {}
+            }
             if (isLoggedIn) {
                 showApp();
             } else {
@@ -101,6 +117,7 @@
             event.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
             const loginBtn = document.querySelector('.login-btn');
             const errorMessage = document.getElementById('errorMessage');
             const originalText = loginBtn.innerHTML;
@@ -110,7 +127,7 @@
             loginBtn.disabled = true;
             loginBtn.classList.add('loading');
             // Liste de messages cycliques
-            const loadingMessages = [
+            let loadingMessages = [
                 'Chargement des modules...',
                 'Initialisation de la base...',
                 'Vérification des accès...',
@@ -122,6 +139,11 @@
                 'Recherche de cornichons disparus...',
                 'Analyse du ketchup restant...'
             ];
+            // Mélanger l'ordre des messages à chaque login
+            loadingMessages = loadingMessages
+                .map(value => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value);
             let msgIndex = 0;
             loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="spinner"></div><div id='loginLoadingMsg' style="font-size:12px;color:#bbb;">${loadingMessages[0]}</div></div>`;
             errorMessage.style.display = 'none';
@@ -136,6 +158,12 @@
                 clearInterval(msgInterval);
                 if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
                     localStorage.setItem('isLoggedIn', 'true');
+                    // Sauvegarde ou suppression des identifiants selon la case
+                    if (rememberMe) {
+                        localStorage.setItem('rememberLogin', JSON.stringify({ username, password }));
+                    } else {
+                        localStorage.removeItem('rememberLogin');
+                    }
                     errorMessage.style.display = 'none';
                     loginBtn.innerHTML = originalText;
                     loginBtn.disabled = false;
@@ -195,9 +223,26 @@
             produits.forEach(produit => {
                 const item = document.createElement('div');
                 item.className = 'product-item';
-                item.innerHTML = `<div class="product-name">${produit}</div><div class="quantity-controls"><button class="btn" onclick="decrement('${produit}')">−</button><div class="quantity">${quantities[produit]}</div><button class="btn" onclick="increment('${produit}')">+</button></div>`;
+                item.innerHTML = `
+                    <div class="product-name">${produit}</div>
+                    <div class="quantity-controls">
+                        <button class="btn" onclick="decrement('${produit}')">−</button>
+                        <button class="btn btn-bulk" onclick="changeQuantity('${produit}', 5)">+5</button>
+                        <button class="btn btn-bulk" onclick="changeQuantity('${produit}', 10)">+10</button>
+                        <div class="quantity">${quantities[produit]}</div>
+                        <button class="btn" onclick="increment('${produit}')">+</button>
+                    </div>
+                `;
                 productList.appendChild(item);
             });
+                // Ajout de la fonction pour les boutons bulk
+                function changeQuantity(produit, amount) {
+                    const quantities = getQuantities();
+                    quantities[produit] = (quantities[produit] || 0) + amount;
+                    if (quantities[produit] < 0) quantities[produit] = 0;
+                    saveQuantities(quantities);
+                    render();
+                }
         }
 
         function increment(produit) {
