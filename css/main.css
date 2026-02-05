@@ -140,8 +140,10 @@ body {
 	background: #222;
 	border-color: var(--input-focus);
 }
-.login-btn:focus {
-	outline: none;
+.login-btn:focus,
+.login-btn:active,
+.login-btn:focus-visible {
+	outline: none !important;
 	border-color: var(--input-focus);
 }
 .error-message {
@@ -223,8 +225,10 @@ body {
 	border-color: var(--border-hover);
 	transform: translateY(-2px);
 }
-.category-btn:focus {
-	outline: none;
+.category-btn:focus,
+.category-btn:active,
+.category-btn:focus-visible {
+	outline: none !important;
 	border-color: var(--input-focus);
 }
 .product-view { display: none; }
