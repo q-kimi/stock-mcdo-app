@@ -245,16 +245,17 @@
                 `;
                 productList.appendChild(item);
             });
-                // Ajout de la fonction pour les boutons bulk
-                function changeQuantity(produit, amount) {
-                    const quantities = getQuantities();
-                    // Correction : s'assurer que la clé existe et que la catégorie est bien sélectionnée
-                    if (!currentCategory || !(produit in quantities)) return;
-                    quantities[produit] = (quantities[produit] || 0) + amount;
-                    if (quantities[produit] < 0) quantities[produit] = 0;
-                    saveQuantities(quantities);
-                    render();
-                }
+        }
+
+        // Ajout de la fonction pour les boutons bulk (portée globale)
+        window.changeQuantity = function(produit, amount) {
+            const quantities = getQuantities();
+            if (!currentCategory || !(produit in quantities)) return;
+            quantities[produit] = (quantities[produit] || 0) + amount;
+            if (quantities[produit] < 0) quantities[produit] = 0;
+            saveQuantities(quantities);
+            render();
+        }
         }
 
         function increment(produit) {
