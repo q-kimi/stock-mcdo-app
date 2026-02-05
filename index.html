@@ -75,45 +75,125 @@
         const CREDENTIALS = { username: 'admin', password: 'admin' };
         const produitsParCategorie = { cuisine: ['Big Mac', 'McChicken', 'Royal Deluxe', 'Frites M', 'Frites L', 'Nuggets 4', 'Nuggets 9', 'Nuggets 20', 'Crousty Poulet', "P'tit Wrap Ranch", 'Double Cheese', 'Filet-O-Fish'], comptoir: ['Coca-Cola M', 'Coca-Cola L', 'Sprite M', 'Fanta M', 'McFlurry Oreo', "McFlurry M&M's", 'Sundae Caramel', 'Sundae Chocolat', 'Milk-shake Vanille', 'Café', 'Cappuccino', 'Muffin'] };
         let currentCategory = null;
-        function checkAuth() { const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; if (isLoggedIn) { showApp(); } else { showLogin(); } }
-        function showLogin() { document.getElementById('loginScreen').style.display = 'flex'; document.getElementById('appContainer').classList.remove('active'); }
-        function showApp() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('appContainer').classList.add('active'); document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
-        function login(event) { event.preventDefault(); const username = document.getElementById('username').value; const password = document.getElementById('password').value; const errorMessage = document.getElementById('errorMessage'); if (username === CREDENTIALS.username && password === CREDENTIALS.password) { localStorage.setItem('isLoggedIn', 'true'); errorMessage.style.display = 'none'; showApp(); } else { errorMessage.style.display = 'block'; } return false; }
-            const username = document.getElementById('username').value; const password = document.getElementById('password').value;
-    const loginBtn = document.querySelector('.login-btn');
-    const errorMessage = document.getElementById('errorMessage');
-    
-    // Afficher le spinner
-    loginBtn.disabled = true;
-    loginBtn.classList.add('loading');
-    const originalText = loginBtn.innerHTML;
-    loginBtn.innerHTML = '<div class="spinner"></div>';
-    errorMessage.style.display = 'none';
-    
-    // Attendre 2 secondes
-    setTimeout(() => {
-        82
-            .username && password === CREDENTIALS.password) {
-            localStorage.setItem('isLoggedIn', 'true');
-            currentCategory = null;
-            showApp();
-        } else {
-            errorMessage.style.display = 'block';
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-            loginBtn.classList.remove('loading');
+
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                showApp();
+            } else {
+                showLogin();
+            }
         }
-    }, 2000);
-    
-    return false;
-        function logout() { localStorage.removeItem('isLoggedIn'); currentCategory = null; showLogin(); }
-        function selectCategory(category) { currentCategory = category; document.getElementById('categorySelector').style.display = 'none'; document.getElementById('productView').classList.add('active'); const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' }; document.getElementById('categoryTitle').textContent = titles[category]; render(); }
-        function backToCategories() { currentCategory = null; document.getElementById('categorySelector').style.display = 'flex'; document.getElementById('productView').classList.remove('active'); }
-        function getQuantities() { const saved = localStorage.getItem(`stockMcdo_${currentCategory}`); if (saved) { return JSON.parse(saved); } const produits = produitsParCategorie[currentCategory] || []; return produits.reduce((acc, p) => ({...acc, [p]: 0}), {}); }
-        function saveQuantities(quantities) { localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities)); }
-        function render() { if (!currentCategory) return; const quantities = getQuantities(); const productList = document.getElementById('productList'); productList.innerHTML = ''; const produits = produitsParCategorie[currentCategory]; produits.forEach(produit => { const item = document.createElement('div'); item.className = 'product-item'; item.innerHTML = `<div class="product-name">${produit}</div><div class="quantity-controls"><button class="btn" onclick="decrement('${produit}')">−</button><div class="quantity">${quantities[produit]}</div><button class="btn" onclick="increment('${produit}')">+</button></div>`; productList.appendChild(item); }); }
-        function increment(produit) { const quantities = getQuantities(); quantities[produit]++; saveQuantities(quantities); render(); }
-        function decrement(produit) { const quantities = getQuantities(); if (quantities[produit] > 0) { quantities[produit]--; saveQuantities(quantities); render(); } }
+
+        function showLogin() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('appContainer').classList.remove('active');
+        }
+
+        function showApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').classList.add('active');
+            document.getElementById('categorySelector').style.display = 'flex';
+            document.getElementById('productView').classList.remove('active');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.querySelector('.login-btn');
+            const errorMessage = document.getElementById('errorMessage');
+            const originalText = loginBtn.innerHTML;
+
+            // Afficher le spinner et désactiver le bouton
+            loginBtn.disabled = true;
+            loginBtn.classList.add('loading');
+            loginBtn.innerHTML = '<div class="spinner"></div>';
+            errorMessage.style.display = 'none';
+
+            setTimeout(() => {
+                if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    errorMessage.style.display = 'none';
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('loading');
+                    currentCategory = null;
+                    showApp();
+                } else {
+                    errorMessage.style.display = 'block';
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('loading');
+                }
+            }, 2000);
+            return false;
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            currentCategory = null;
+            showLogin();
+        }
+
+        function selectCategory(category) {
+            currentCategory = category;
+            document.getElementById('categorySelector').style.display = 'none';
+            document.getElementById('productView').classList.add('active');
+            const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' };
+            document.getElementById('categoryTitle').textContent = titles[category];
+            render();
+        }
+
+        function backToCategories() {
+            currentCategory = null;
+            document.getElementById('categorySelector').style.display = 'flex';
+            document.getElementById('productView').classList.remove('active');
+        }
+
+        function getQuantities() {
+            const saved = localStorage.getItem(`stockMcdo_${currentCategory}`);
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            const produits = produitsParCategorie[currentCategory] || [];
+            return produits.reduce((acc, p) => ({ ...acc, [p]: 0 }), {});
+        }
+
+        function saveQuantities(quantities) {
+            localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities));
+        }
+
+        function render() {
+            if (!currentCategory) return;
+            const quantities = getQuantities();
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            const produits = produitsParCategorie[currentCategory];
+            produits.forEach(produit => {
+                const item = document.createElement('div');
+                item.className = 'product-item';
+                item.innerHTML = `<div class="product-name">${produit}</div><div class="quantity-controls"><button class="btn" onclick="decrement('${produit}')">−</button><div class="quantity">${quantities[produit]}</div><button class="btn" onclick="increment('${produit}')">+</button></div>`;
+                productList.appendChild(item);
+            });
+        }
+
+        function increment(produit) {
+            const quantities = getQuantities();
+            quantities[produit]++;
+            saveQuantities(quantities);
+            render();
+        }
+
+        function decrement(produit) {
+            const quantities = getQuantities();
+            if (quantities[produit] > 0) {
+                quantities[produit]--;
+                saveQuantities(quantities);
+                render();
+            }
+        }
+
         window.onload = checkAuth;
     </script>
 </body>
