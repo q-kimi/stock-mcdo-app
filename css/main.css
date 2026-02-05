@@ -1,3 +1,19 @@
+.quantity-input {
+	width: 60px;
+	padding: 6px 8px;
+	font-size: 17px;
+	border-radius: 6px;
+	border: 1px solid var(--input-border);
+	background: var(--input-bg);
+	color: #fff;
+	text-align: center;
+	outline: none;
+	margin: 0 2px;
+}
+.quantity-input:focus {
+	border-color: var(--primary);
+	background: #181818;
+}
 /* Fichier central pour les styles globaux du projet MedalBot - Pertes */
 
 :root {

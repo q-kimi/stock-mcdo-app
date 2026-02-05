@@ -50,7 +50,7 @@ function render() {
                 <button class="btn" data-action="decrement" data-produit="${produit}">−</button>
                 <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="5">+5</button>
                 <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="10">+10</button>
-                <div class="quantity">${quantities[produit]}</div>
+                <div class="quantity" data-produit="${produit}" tabindex="0">${quantities[produit]}</div>
                 <button class="btn" data-action="increment" data-produit="${produit}">+</button>
             </div>
         `;
@@ -197,15 +197,12 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     
     // Gestion des boutons produits avec délégation d'événement sur document
-    // Utiliser document au lieu de productList car productList est créé dynamiquement
     document.addEventListener('click', e => {
         const target = e.target;
-        
-        // Vérifier si c'est un bouton de produit
+        // Boutons +/-/bulk
         if (target.classList.contains('btn') && target.hasAttribute('data-produit')) {
             const produit = target.getAttribute('data-produit');
             const action = target.getAttribute('data-action');
-            
             if (action === 'increment') {
                 increment(produit);
             } else if (action === 'decrement') {
@@ -214,6 +211,39 @@ window.addEventListener('DOMContentLoaded', () => {
                 const amount = parseInt(target.getAttribute('data-amount'), 10);
                 changeQuantity(produit, amount);
             }
+        }
+        // Saisie directe sur la quantité
+        if (target.classList.contains('quantity') && target.hasAttribute('data-produit')) {
+            const produit = target.getAttribute('data-produit');
+            const currentValue = target.textContent;
+            // Remplacer le div par un input
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'quantity-input';
+            input.value = currentValue;
+            input.min = 0;
+            input.style.width = '60px';
+            input.setAttribute('data-produit', produit);
+            target.replaceWith(input);
+            input.focus();
+            input.select();
+            // Validation sur blur ou entrée
+            const validate = () => {
+                let val = parseInt(input.value, 10);
+                if (isNaN(val) || val < 0) val = 0;
+                const quantities = getQuantities();
+                quantities[produit] = val;
+                saveQuantities(quantities);
+                render();
+            };
+            input.addEventListener('blur', validate);
+            input.addEventListener('keydown', ev => {
+                if (ev.key === 'Enter') {
+                    input.blur();
+                } else if (ev.key === 'Escape') {
+                    render();
+                }
+            });
         }
     });
 });
