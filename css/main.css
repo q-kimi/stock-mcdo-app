@@ -263,7 +263,8 @@ body {
 .back-btn:active,
 .back-btn:focus-visible {
 	outline: none !important;
-	border-color: var(--input-focus);
+	border-color: var(--input-border) !important;
+	box-shadow: none !important;
 }
 .product-list {
 	display: grid;
