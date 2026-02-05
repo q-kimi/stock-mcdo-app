@@ -1,16 +1,16 @@
 /* Fichier central pour les styles globaux du projet MedalBot - Pertes */
 
 :root {
-	--main-bg: #0a0a0a;
+	--main-bg: ##000000;
 	--main-fg: #e0e0e0;
 	--primary: #e53935;
-	--secondary: #111;
-	--border: #1a1a1a;
+	--secondary: ##000000;
+	--border: ##111111;
 	--border-hover: #333;
 	--accent: #ffe082;
 	--danger: #ff4444;
-	--input-bg: #1a1a1a;
-	--input-border: #222;
+	--input-bg: ##0a0a0a;
+	--input-border: ##111111;
 	--input-focus: #333;
 	--footer-fg: #444;
 }
