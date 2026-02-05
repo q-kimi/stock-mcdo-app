@@ -308,6 +308,41 @@ input[type="checkbox"] {
 	color: var(--footer-fg);
 	font-size: 13px;
 }
+
+.footer-link {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+}
+
+.footer-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.footer-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+@keyframes underlineGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.footer-link::after {
+    animation: underlineGlow 2s ease-in-out infinite;
+}
 .login-btn.loading {
 	opacity: 0.7;
 	cursor: not-allowed;
