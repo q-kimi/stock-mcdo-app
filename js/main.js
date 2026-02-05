@@ -1,51 +1,33 @@
-// Fichier central pour les fonctions JS du projet MedalBot - Pertes
+// Point d'entrée principal - MedalBot Pertes
+import { checkAuth, logout } from './modules/auth.js';
+import { produitsParCategorie, getQuantities, saveQuantities, updateQuantity } from './modules/produits.js';
+import { showLogin, showApp } from './modules/ui.js';
+import { DOM } from './utils/dom.js';
+import { CATEGORY_TITLES } from './config/constants.js';
+import { initLoginView } from './views/login.js';
+import { initCategoriesView } from './views/categories.js';
+import { initProduitsView } from './views/produits.js';
 
-const CREDENTIALS = { username: 'admin', password: 'admin' };
-
-const produitsParCategorie = {
-    cuisine: ['Big Mac', 'McChicken', 'Royal Deluxe', 'Frites M', 'Frites L', 'Nuggets 4', 'Nuggets 9', 'Nuggets 20', 'Crousty Poulet', "P'tit Wrap Ranch", 'Double Cheese', 'Filet-O-Fish'],
-    comptoir: ['Coca-Cola M', 'Coca-Cola L', 'Sprite M', 'Fanta M', 'McFlurry Oreo', "McFlurry M&M's", 'Sundae Caramel', 'Sundae Chocolat', 'Milk-shake Vanille', 'Café', 'Cappuccino', 'Muffin']
+// État de l'application
+const state = {
+    currentCategory: null,
+    currentSearch: ''
 };
 
-let currentCategory = null;
-let currentSearch = '';
-
-function showLogin() {
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('appContainer').classList.remove('active');
-}
-
-function showApp() {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('appContainer').classList.add('active');
-    document.getElementById('categorySelector').style.display = 'flex';
-    document.getElementById('productView').classList.remove('active');
-}
-
-function getQuantities() {
-    const saved = localStorage.getItem(`stockMcdo_${currentCategory}`);
-    if (saved) {
-        return JSON.parse(saved);
-    }
-    const produits = produitsParCategorie[currentCategory] || [];
-    return produits.reduce((acc, p) => ({ ...acc, [p]: 0 }), {});
-}
-
-function saveQuantities(quantities) {
-    localStorage.setItem(`stockMcdo_${currentCategory}`, JSON.stringify(quantities));
-}
-
+// Rendu de la liste des produits
 function render() {
-    if (!currentCategory) return;
-    const quantities = getQuantities();
-    const productList = document.getElementById('productList');
+    if (!state.currentCategory) return;
+    
+    const quantities = getQuantities(state.currentCategory);
+    const productList = DOM.getById('productList');
     productList.innerHTML = '';
-    let produits = produitsParCategorie[currentCategory];
-    // Filtrage par recherche
-    if (currentSearch && currentSearch.trim() !== '') {
-        const searchLower = currentSearch.trim().toLowerCase();
+    
+    let produits = produitsParCategorie[state.currentCategory];
+    if (state.currentSearch.trim()) {
+        const searchLower = state.currentSearch.trim().toLowerCase();
         produits = produits.filter(p => p.toLowerCase().includes(searchLower));
     }
+    
     produits.forEach(produit => {
         const item = document.createElement('div');
         item.className = 'product-item';
@@ -63,201 +45,112 @@ function render() {
     });
 }
 
+// Gestion des changements de quantité
 function changeQuantity(produit, amount) {
-    const quantities = getQuantities();
-    if (!currentCategory || !(produit in quantities)) return;
-    
-    quantities[produit] = (quantities[produit] || 0) + amount;
-    if (quantities[produit] < 0) quantities[produit] = 0;
-    
-    saveQuantities(quantities);
-    render();
-}
-
-function increment(produit) {
-    changeQuantity(produit, 1);
-}
-
-function decrement(produit) {
-    changeQuantity(produit, -1);
-}
-
-function selectCategory(category) {
-    currentCategory = category;
-    document.getElementById('categorySelector').style.display = 'none';
-    document.getElementById('productView').classList.add('active');
-    const titles = { cuisine: 'Perte Cuisine', comptoir: 'Perte Comptoir' };
-    document.getElementById('categoryTitle').textContent = titles[category];
-    render();
-}
-
-function backToCategories() {
-    currentCategory = null;
-    document.getElementById('categorySelector').style.display = 'flex';
-    document.getElementById('productView').classList.remove('active');
-}
-
-function logout() {
-    localStorage.removeItem('isLoggedIn');
-    currentCategory = null;
-    showLogin();
-}
-
-function handleLogin(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const rememberMe = document.getElementById('rememberMe').checked;
-    const loginBtn = document.querySelector('.login-btn');
-    const errorMessage = document.getElementById('errorMessage');
-    const originalText = loginBtn.innerHTML;
-
-    loginBtn.disabled = true;
-    loginBtn.classList.add('loading');
-
-    let loadingMessages = [
-        'Chargement des modules...',
-        'Initialisation de la base...',
-        'Vérification des accès...',
-        'Connexion sécurisée...',
-        'Comptage des pertes en cours...',
-        'Recherche de frites disparues...',
-        'Recherche de nuggets égarés...',
-        'Recherche de steaks 10:1 perdus...',
-        'Recherche de cornichons disparus...',
-        'Analyse du ketchup restant...'
-    ];
-
-    loadingMessages = loadingMessages
-        .map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value);
-
-    let msgIndex = 0;
-    loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><div class="spinner"></div><div id='loginLoadingMsg' style="font-size:12px;color:#bbb;">${loadingMessages[0]}</div></div>`;
-    errorMessage.style.display = 'none';
-
-    let msgInterval = setInterval(() => {
-        msgIndex = (msgIndex + 1) % loadingMessages.length;
-        const msgDiv = document.getElementById('loginLoadingMsg');
-        if (msgDiv) msgDiv.textContent = loadingMessages[msgIndex];
-    }, 700);
-
-    setTimeout(() => {
-        clearInterval(msgInterval);
-        if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
-            localStorage.setItem('isLoggedIn', 'true');
-            if (rememberMe) {
-                localStorage.setItem('rememberLogin', JSON.stringify({ username, password }));
-            } else {
-                localStorage.removeItem('rememberLogin');
-            }
-            errorMessage.style.display = 'none';
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-            loginBtn.classList.remove('loading');
-            currentCategory = null;
-            showApp();
-        } else {
-            errorMessage.style.display = 'block';
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-            loginBtn.classList.remove('loading');
-        }
-    }, 2000);
-
-    return false;
-}
-
-function checkAuth() {
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    if (isLoggedIn) {
-        showApp();
-    } else {
-        showLogin();
-        setTimeout(() => {
-            const savedLogin = localStorage.getItem('rememberLogin');
-            if (savedLogin) {
-                try {
-                    const creds = JSON.parse(savedLogin);
-                    document.getElementById('username').value = creds.username || '';
-                    document.getElementById('password').value = creds.password || '';
-                    document.getElementById('rememberMe').checked = true;
-                } catch(e) {}
-            }
-        }, 0);
+    if (updateQuantity(state.currentCategory, produit, amount)) {
+        render();
     }
 }
 
-// Exposer les fonctions au scope global pour les onclick inline
-window.logout = logout;
-window.selectCategory = selectCategory;
-window.backToCategories = backToCategories;
+// Sélection de catégorie
+function selectCategory(category) {
+    state.currentCategory = category;
+    DOM.hide(DOM.getById('categorySelector'));
+    DOM.addClass(DOM.getById('productView'), 'active');
+    DOM.getById('categoryTitle').textContent = CATEGORY_TITLES[category];
+    render();
+}
 
-// Attachement des événements après chargement du DOM
-window.addEventListener('DOMContentLoaded', () => {
-    checkAuth();
+// Retour aux catégories
+function backToCategories() {
+    state.currentCategory = null;
+    state.currentSearch = '';
+    DOM.show(DOM.getById('categorySelector'));
+    DOM.removeClass(DOM.getById('productView'), 'active');
+}
+
+// Gestion de la déconnexion
+function handleLogout() {
+    logout();
+    state.currentCategory = null;
+    state.currentSearch = '';
+    showLogin();
+}
+
+
+// Initialisation de l'application
+DOM.on(window, 'DOMContentLoaded', () => {
+    // Initialiser les vues
+    initLoginView();
+    initCategoriesView(selectCategory);
+    initProduitsView(backToCategories);
     
-    // Login
-    document.getElementById('loginForm').addEventListener('submit', handleLogin);
-
-    // Recherche produits
-    const searchInput = document.getElementById('productSearch');
+    // Vérifier l'authentification
+    if (checkAuth()) {
+        showApp();
+    } else {
+        showLogin();
+    }
+    
+    // Recherche de produits
+    const searchInput = DOM.getById('productSearch');
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            currentSearch = e.target.value;
+        DOM.on(searchInput, 'input', (e) => {
+            state.currentSearch = e.target.value;
             render();
         });
     }
     
-    // Gestion des boutons produits avec délégation d'événement sur document
-    document.addEventListener('click', e => {
+    // Gestion des boutons produits
+    DOM.on(document, 'click', (e) => {
         const target = e.target;
+        
         // Boutons +/-/bulk
         if (target.classList.contains('btn') && target.hasAttribute('data-produit')) {
             const produit = target.getAttribute('data-produit');
             const action = target.getAttribute('data-action');
-            if (action === 'increment') {
-                increment(produit);
-            } else if (action === 'decrement') {
-                decrement(produit);
-            } else if (action === 'bulk') {
+            
+            if (action === 'increment') changeQuantity(produit, 1);
+            else if (action === 'decrement') changeQuantity(produit, -1);
+            else if (action === 'bulk') {
                 const amount = parseInt(target.getAttribute('data-amount'), 10);
                 changeQuantity(produit, amount);
             }
         }
-        // Saisie directe sur la quantité
+        
+        // Saisie directe sur quantité
         if (target.classList.contains('quantity') && target.hasAttribute('data-produit')) {
             const produit = target.getAttribute('data-produit');
             const currentValue = target.textContent;
-            // Remplacer le div par un input
             const input = document.createElement('input');
+            
             input.type = 'number';
             input.className = 'quantity-input';
             input.value = currentValue;
             input.min = 0;
             input.style.width = '60px';
             input.setAttribute('data-produit', produit);
+            
             target.replaceWith(input);
             input.focus();
             input.select();
-            // Validation sur blur ou entrée
+            
             const validate = () => {
-                let val = parseInt(input.value, 10);
-                if (isNaN(val) || val < 0) val = 0;
-                const quantities = getQuantities();
+                const val = Math.max(0, parseInt(input.value, 10) || 0);
+                const quantities = getQuantities(state.currentCategory);
                 quantities[produit] = val;
-                saveQuantities(quantities);
+                saveQuantities(state.currentCategory, quantities);
                 render();
             };
-            input.addEventListener('blur', validate);
-            input.addEventListener('keydown', ev => {
-                if (ev.key === 'Enter') {
-                    input.blur();
-                } else if (ev.key === 'Escape') {
-                    render();
-                }
+            
+            DOM.on(input, 'blur', validate);
+            DOM.on(input, 'keydown', (ev) => {
+                if (ev.key === 'Enter') input.blur();
+                else if (ev.key === 'Escape') render();
             });
         }
     });
+    
+    // Bouton logout
+    DOM.onAll(DOM.getAll('.logout-btn'), 'click', handleLogout);
 });
