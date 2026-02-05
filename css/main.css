@@ -259,8 +259,11 @@ body {
 	color: #fff;
 	border-color: var(--input-focus);
 }
-.back-btn:focus {
-	outline: 2px solid var(--primary);
+.back-btn:focus,
+.back-btn:active,
+.back-btn:focus-visible {
+	outline: none !important;
+	border-color: var(--input-focus);
 }
 .product-list {
 	display: grid;
@@ -356,7 +359,7 @@ input[type="checkbox"] {
 	margin-top: 48px;
 	padding: 24px 0 16px 0;
 	background: #000;
-	color: #ffe082;
+	color: #fff;
 	font-size: 15px;
 	box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.7);
 	border-top: 1px solid #111;
