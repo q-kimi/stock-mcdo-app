@@ -8,6 +8,7 @@ const produitsParCategorie = {
 };
 
 let currentCategory = null;
+let currentSearch = '';
 
 function showLogin() {
     document.getElementById('loginScreen').style.display = 'flex';
@@ -39,8 +40,12 @@ function render() {
     const quantities = getQuantities();
     const productList = document.getElementById('productList');
     productList.innerHTML = '';
-    const produits = produitsParCategorie[currentCategory];
-    
+    let produits = produitsParCategorie[currentCategory];
+    // Filtrage par recherche
+    if (currentSearch && currentSearch.trim() !== '') {
+        const searchLower = currentSearch.trim().toLowerCase();
+        produits = produits.filter(p => p.toLowerCase().includes(searchLower));
+    }
     produits.forEach(produit => {
         const item = document.createElement('div');
         item.className = 'product-item';
@@ -195,6 +200,15 @@ window.addEventListener('DOMContentLoaded', () => {
     
     // Login
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+    // Recherche produits
+    const searchInput = document.getElementById('productSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            render();
+        });
+    }
     
     // Gestion des boutons produits avec délégation d'événement sur document
     document.addEventListener('click', e => {
