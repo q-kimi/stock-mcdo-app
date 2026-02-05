@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock McDo - Gestion des pertes</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -31,42 +32,4 @@
         </div>
     </div>
     <script>
-        const CREDENTIALS = { username: 'admin', password: 'admin' };
-        const produitsParCategorie = { cuisine: ['Big Mac', 'McChicken', 'Royal Deluxe', 'Frites M', 'Frites L', 'Nuggets 4', 'Nuggets 9', 'Nuggets 20', 'Crousty Poulet', "P'tit Wrap Ranch", 'Double Cheese', 'Filet-O-Fish'], comptoir: ['Coca-Cola M', 'Coca-Cola L', 'Sprite M', 'Fanta M', 'McFlurry Oreo', "McFlurry M&M's", 'Sundae Caramel', 'Sundae Chocolat', 'Milk-shake Vanille', 'Café', 'Cappuccino', 'Muffin'] };
-        let currentCategory = null;
-
-        function checkAuth() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            if (isLoggedIn) {
-                showApp();
-            } else {
-                showLogin();
-                // Pré-remplir les champs si rememberMe est activé, APRES affichage du login
-                setTimeout(() => {
-                    const savedLogin = localStorage.getItem('rememberLogin');
-                    if (savedLogin) {
-                        try {
-                            const creds = JSON.parse(savedLogin);
-                            document.getElementById('username').value = creds.username || '';
-                            document.getElementById('password').value = creds.password || '';
-                            document.getElementById('rememberMe').checked = true;
-                        } catch(e) {}
-                    }
-                }, 0);
-            }
-        }
-
-        function showLogin() {
-            document.getElementById('loginScreen').style.display = 'flex';
-            document.getElementById('appContainer').classList.remove('active');
-        }
-
-        function showApp() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('appContainer').classList.add('active');
-            document.getElementById('categorySelector').style.display = 'flex';
-            document.getElementById('productView').classList.remove('active');
-        }
-
-        function login(event) {
-            // ...existing code...
+        // ...JS déplacé dans js/main.js...
