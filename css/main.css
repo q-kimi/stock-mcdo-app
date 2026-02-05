@@ -302,12 +302,39 @@ input[type="checkbox"] {
 	text-align: center;
 }
 .footer {
-	text-align: center;
-	margin-top: 40px;
-	padding: 20px;
-	color: var(--footer-fg);
-	font-size: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 48px;
+	padding: 24px 0 16px 0;
+	background: #000;
+	color: #ffe082;
+	font-size: 15px;
+	box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.7);
+	border-top: 1px solid #111;
+	letter-spacing: 0.03em;
+	transition: background 0.3s;
+	z-index: 10;
+	position: relative;
 }
+	.footer-content {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		width: 100%;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+	.footer-icons a {
+		display: inline-flex;
+		align-items: center;
+		margin-left: 8px;
+		transition: transform 0.2s;
+	}
+	.footer-icons a:hover {
+		transform: scale(1.15) rotate(-6deg);
+		filter: drop-shadow(0 0 4px #ffe08288);
+	}
 .login-btn.loading {
 	opacity: 0.7;
 	cursor: not-allowed;
