@@ -267,7 +267,7 @@ body {
 	color: #fff;
 }
 .btn:focus {
-	outline: 2px solid var(--primary);
+
 }
 .btn-bulk {
 	width: 44px;
@@ -285,11 +285,10 @@ body {
 	color: #fff;
 }
 .btn-bulk:focus {
-	outline: 2px solid var(--primary);
+
 }
 input[type="checkbox"] {
 	width: 16px;
-	height: 16px;
 	min-width: 16px;
 	min-height: 16px;
 	accent-color: var(--primary);
