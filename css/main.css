@@ -1,20 +1,15 @@
 /* Fichier central pour les styles globaux du projet MedalBot - Pertes */
 
 :root {
-    --main-bg: #1a1a1a;
-    --main-fg: #e0e0e0;
+    --main-bg: #000000;    --main-fg: #e0e0e0;
     --primary: #e53935;
-    --secondary: #2a2a2a;
-    --border: #404040;
+    --secondary: #000000;    --border: #404040;
     --border-hover: #555555;
     --accent: #ffe082;
     --danger: #ff4444;
-    --input-bg: #252525;
-    --input-border: #404040;
-    --input-focus: #555555;
-    --footer-fg: #888888;
-}
-
+    --input-bg: #0a0a0a;    --input-border: #404040;
+    --input-focus: #555555;    --footer-fg: #888888;
+    --footer-fg: #444444;
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
