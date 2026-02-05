@@ -302,19 +302,30 @@ input[type="checkbox"] {
 	text-align: center;
 }
 .footer {
-	text-align: center;
-	margin-top: 40px;
-	padding: 20px;
-	color: var(--footer-fg);
-	font-size: 13px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    z-index: 1000;
 }
 
 .footer-link {
-    color: #fff;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     position: relative;
     display: inline-block;
     padding-bottom: 2px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .footer-link::after {
