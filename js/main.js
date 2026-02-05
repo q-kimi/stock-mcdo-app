@@ -11,6 +11,7 @@ import { initProduitsView } from './views/produits.js';
 // État de l'application
 const state = {
     currentCategory: null,
+    currentSubcategory: null,
     currentSearch: ''
 };
 
@@ -52,21 +53,43 @@ function changeQuantity(produit, amount) {
     }
 }
 
-// Sélection de catégorie
+// Sélection de catégorie (uniquement pour Comptoir maintenant)
 function selectCategory(category) {
     state.currentCategory = category;
+    state.currentSubcategory = null;
     DOM.hide(DOM.getById('categorySelector'));
+    DOM.hide(DOM.getById('subcategorySelector'));
     DOM.addClass(DOM.getById('productView'), 'active');
     DOM.getById('categoryTitle').textContent = CATEGORY_TITLES[category];
     render();
 }
 
+// Sélection de sous-catégorie (pour Perte Cuisine)
+function selectSubcategory(category, subcategoryId) {
+    state.currentCategory = category;
+    state.currentSubcategory = subcategoryId;
+    DOM.hide(DOM.getById('categorySelector'));
+    DOM.hide(DOM.getById('subcategorySelector'));
+    DOM.addClass(DOM.getById('productView'), 'active');
+    DOM.getById('categoryTitle').textContent = `${CATEGORY_TITLES[category]} - ${subcategoryId}`;
+    render();
+}
+
 // Retour aux catégories
 function backToCategories() {
-    state.currentCategory = null;
-    state.currentSearch = '';
-    DOM.show(DOM.getById('categorySelector'));
-    DOM.removeClass(DOM.getById('productView'), 'active');
+    // Si on est dans une sous-catégorie, retourner aux sous-catégories
+    if (state.currentSubcategory) {
+        state.currentSubcategory = null;
+        state.currentSearch = '';
+        DOM.removeClass(DOM.getById('productView'), 'active');
+        DOM.show(DOM.getById('subcategorySelector'));
+    } else {
+        // Sinon, retourner aux catégories principales
+        state.currentCategory = null;
+        state.currentSearch = '';
+        DOM.show(DOM.getById('categorySelector'));
+        DOM.removeClass(DOM.getById('productView'), 'active');
+    }
 }
 
 // Gestion de la déconnexion
@@ -82,7 +105,7 @@ function handleLogout() {
 DOM.on(window, 'DOMContentLoaded', () => {
     // Initialiser les vues
     initLoginView();
-    initCategoriesView(selectCategory);
+    initCategoriesView(selectCategory, selectSubcategory);
     initProduitsView(backToCategories);
     
     // Vérifier l'authentification

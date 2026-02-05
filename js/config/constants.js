@@ -20,6 +20,14 @@ export const CATEGORY_TITLES = {
     [CATEGORIES.COMPTOIR]: 'Perte Comptoir'
 };
 
+export const CUISINE_SUBCATEGORIES = [
+    { id: 'onglet1', name: 'Onglet 1' },
+    { id: 'onglet2', name: 'Onglet 2' },
+    { id: 'onglet3', name: 'Onglet 3' },
+    { id: 'onglet4', name: 'Onglet 4' },
+    { id: 'onglet5', name: 'Onglet 5' }
+];
+
 export const LOADING_MESSAGES = [
     'Chargement des modules...',
     'Initialisation de la base...',
