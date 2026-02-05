@@ -130,7 +130,8 @@ body {
 	border-color: var(--input-focus);
 }
 .login-btn:focus {
-	outline: 2px solid var(--primary);
+	outline: none;
+	border-color: var(--input-focus);
 }
 .error-message {
 	color: var(--danger);
@@ -212,7 +213,8 @@ body {
 	transform: translateY(-2px);
 }
 .category-btn:focus {
-	outline: 2px solid var(--primary);
+	outline: none;
+	border-color: var(--input-focus);
 }
 .product-view { display: none; }
 .product-view.active { display: block; }
