@@ -1,4 +1,4 @@
-/* Fichier central pour les styles globaux du projet Stock McDo App */
+/* Fichier central pour les styles globaux du projet MedalBot - Pertes */
 
 :root {
 	--main-bg: #0a0a0a;
@@ -323,4 +323,249 @@ input[type="checkbox"] {
 	.category-btn { padding: 18px 8px; font-size: 15px; }
 	.product-header h2 { font-size: 18px; }
 	.header h1 { font-size: 20px; }
+}
+
+/* ====================================
+   RESPONSIVE DESIGN - MEDIA QUERIES
+==================================== */
+
+/* Tablettes (entre 601px et 1024px) */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .container {
+        max-width: 90vw;
+        padding: 0 15px;
+    }
+    
+    .login-box {
+        padding: 35px;
+        max-width: 450px;
+    }
+    
+    .category-btn {
+        padding: 15px 6px;
+        font-size: 14px;
+    }
+    
+    .product-item {
+        padding: 12px;
+    }
+    
+    .product-name {
+        font-size: 15px;
+    }
+    
+    .quantity {
+        font-size: 16px;
+        min-width: 28px;
+    }
+    
+    .btn {
+        min-width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+}
+
+/* Téléphones (max 600px) - Amélioré */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+    
+    .login-container {
+        padding: 10px;
+    }
+    
+    .login-box {
+        padding: 20px 15px;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .login-box h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+    
+    .login-box p {
+        font-size: 13px;
+    }
+    
+    .form-group label {
+        font-size: 13px;
+    }
+    
+    .form-group input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .login-btn {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    /* Adaptation de l'interface principale */
+    .header {
+        padding: 12px;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .header h1 {
+        font-size: 18px;
+    }
+    
+    .logout-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .category-selector h2 {
+        font-size: 20px;
+    }
+    
+    .category-selector p {
+        font-size: 13px;
+    }
+    
+    .category-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .category-btn {
+        padding: 16px 12px;
+        font-size: 15px;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .product-header {
+        padding: 12px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .product-header h2 {
+        font-size: 18px;
+        text-align: center;
+    }
+    
+    .back-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .product-list {
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .product-item {
+        padding: 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .product-name {
+        font-size: 14px;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .quantity-controls {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    
+    .quantity {
+        font-size: 16px;
+        min-width: 40px;
+        padding: 8px 12px;
+    }
+    
+    .btn {
+        min-width: 40px;
+        height: 40px;
+        font-size: 16px;
+        flex: 1;
+        max-width: calc(20% - 4px);
+    }
+    
+    .btn-bulk {
+        font-size: 13px;
+    }
+    
+    .footer {
+        padding: 12px;
+        font-size: 11px;
+    }
+}
+
+/* Très petits écrans (max 360px) */
+@media (max-width: 360px) {
+    .login-box h1 {
+        font-size: 20px;
+    }
+    
+    .category-btn {
+        padding: 14px 10px;
+        font-size: 14px;
+    }
+    
+    .product-name {
+        font-size: 13px;
+    }
+    
+    .btn {
+        min-width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .quantity {
+        font-size: 15px;
+        min-width: 36px;
+        padding: 6px 10px;
+    }
+}
+
+/* Grands écrans (min 1440px) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 900px;
+    }
+    
+    .login-box {
+        max-width: 500px;
+        padding: 50px;
+    }
+    
+    .product-item {
+        padding: 16px;
+    }
+    
+    .product-name {
+        font-size: 17px;
+    }
+    
+    .btn {
+        min-width: 42px;
+        height: 42px;
+        font-size: 17px;
+    }
+    
+    .quantity {
+        font-size: 18px;
+        min-width: 36px;
+    }
 }
