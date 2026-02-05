@@ -1,10 +1,25 @@
 :8080 {
-	root * /app
-	file_server
+	root * .
 	encode gzip
+	file_server
 
-	# Disable directory browsing
-	file_server browse
+	handle_path /css/* {
+		root * ./css
+		file_server
+	}
+	handle_path /js/* {
+		root * ./js
+		file_server
+	}
+	handle_path /pages/* {
+		root * ./pages
+		file_server
+	}
+
+	handle_errors {
+		rewrite * /pages/404.html
+		file_server
+	}
 
 	# Logging
 	log {

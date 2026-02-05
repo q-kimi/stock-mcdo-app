@@ -94,20 +94,22 @@
 
         function checkAuth() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            // Pré-remplir les champs si rememberMe est activé
-            const savedLogin = localStorage.getItem('rememberLogin');
-            if (savedLogin) {
-                try {
-                    const creds = JSON.parse(savedLogin);
-                    document.getElementById('username').value = creds.username || '';
-                    document.getElementById('password').value = creds.password || '';
-                    document.getElementById('rememberMe').checked = true;
-                } catch(e) {}
-            }
             if (isLoggedIn) {
                 showApp();
             } else {
                 showLogin();
+                // Pré-remplir les champs si rememberMe est activé, APRES affichage du login
+                setTimeout(() => {
+                    const savedLogin = localStorage.getItem('rememberLogin');
+                    if (savedLogin) {
+                        try {
+                            const creds = JSON.parse(savedLogin);
+                            document.getElementById('username').value = creds.username || '';
+                            document.getElementById('password').value = creds.password || '';
+                            document.getElementById('rememberMe').checked = true;
+                        } catch(e) {}
+                    }
+                }, 0);
             }
         }
 

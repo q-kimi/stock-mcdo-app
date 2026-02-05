@@ -1,0 +1,3 @@
+// Fichier central pour les fonctions JS du projet Stock McDo App
+
+// ...fonctions à déplacer depuis index.html...
