@@ -21,11 +21,30 @@ export const CATEGORY_TITLES = {
 };
 
 export const CUISINE_SUBCATEGORIES = [
-    { id: 'onglet1', name: 'Onglet 1' },
-    { id: 'onglet2', name: 'Onglet 2' },
-    { id: 'onglet3', name: 'Onglet 3' },
-    { id: 'onglet4', name: 'Onglet 4' },
-    { id: 'onglet5', name: 'Onglet 5' }
+    { id: 'bigmac', name: 'Big Mac' },
+    { id: 'cheeseburger', name: 'Cheeseburger' },
+    { id: 'mcchicken', name: 'McChicken' },
+    { id: 'filet-o-fish', name: 'Filet-O-Fish' },
+    { id: 'mcflurry', name: 'McFlurry' },
+    { id: 'nuggets', name: 'Chicken McNuggets' },
+    { id: 'fries', name: 'Frites' },
+    { id: 'wrap', name: 'McWrap' },
+    { id: 'salad', name: 'Salade' },
+    { id: 'applepie', name: 'Apple Pie' }
+    // Ingrédients des burgers
+    { id: 'bun', name: 'Pain à burger' },
+    { id: 'beefpatty', name: 'Steak haché' },
+    { id: 'chickenpatty', name: 'Poulet pané' },
+    { id: 'fishpatty', name: 'Poisson pané' },
+    { id: 'cheese', name: 'Fromage' },
+    { id: 'lettuce', name: 'Salade' },
+    { id: 'tomato', name: 'Tomate' },
+    { id: 'onion', name: 'Oignon' },
+    { id: 'pickles', name: 'Cornichons' },
+    { id: 'sauce', name: 'Sauce spéciale' },
+    { id: 'mayonnaise', name: 'Mayonnaise' },
+    { id: 'ketchup', name: 'Ketchup' },
+    { id: 'mustard', name: 'Moutarde' }
 ];
 
 export const LOADING_MESSAGES = [
