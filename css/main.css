@@ -352,6 +352,7 @@ button:active {
 }
 
 footer {
+        display: none;
     text-align: center;
     padding: 32px 20px;
     color: var(--footer-fg);
@@ -383,6 +384,15 @@ footer a:hover {
 ::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-hover);
+}
+
+/* Afficher le footer uniquement sur la page de login */
+.login-page footer {
+    display: block;
 }
 
 ::-webkit-scrollbar-thumb:hover {
