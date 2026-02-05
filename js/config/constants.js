@@ -30,7 +30,7 @@ export const CUISINE_SUBCATEGORIES = [
     { id: 'fries', name: 'Frites' },
     { id: 'wrap', name: 'McWrap' },
     { id: 'salad', name: 'Salade' },
-    { id: 'applepie', name: 'Apple Pie' }
+    { id: 'applepie', name: 'Apple Pie' },
     // Ingrédients des burgers
     { id: 'bun', name: 'Pain à burger' },
     { id: 'beefpatty', name: 'Steak haché' },
