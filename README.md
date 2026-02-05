@@ -1,5 +1,5 @@
 
-# Stock Web App
+# MedalBot - Pertes
 
 ## Description
 Application web simple pour la gestion de stocks.
