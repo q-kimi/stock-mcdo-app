@@ -34,7 +34,7 @@ class StockPage extends StatefulWidget {
 }
 
 class _StockPageState extends State<StockPage> {
-  // Liste des produits McDo - à personnaliser selon tes besoins
+  // Liste des produits:
   final List<Produit> produits = [
     Produit(nom: 'Big Mac'),
     Produit(nom: 'McChicken'),
