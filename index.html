@@ -44,8 +44,18 @@
         .quantity-controls { display: flex; align-items: center; gap: 16px; }
         .btn { width: 36px; height: 36px; border: 1px solid #222; border-radius: 6px; background: #1a1a1a; color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .btn:hover { background: #222; border-color: #333; }
-        .btn-bulk { width: 44px; height: 36px; font-size: 15px; margin-left: 2px; margin-right: 2px; background: #222; color: #ffe082; border: 1px solid #333; }
-        .btn-bulk:hover { background: #333; color: #fffde7; }
+        .btn-bulk { width: 44px; height: 36px; font-size: 15px; margin-left: 2px; margin-right: 2px; background: #222; color: #fff; border: 1px solid #333; transition: background 0.2s, color 0.2s; }
+        .btn-bulk:hover { background: #333; color: #fff; }
+        /* Fix proportions of checkbox when checked */
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+            min-height: 16px;
+            accent-color: #e53935;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
         .quantity { font-size: 17px; color: #fff; min-width: 32px; text-align: center; }
         .footer { text-align: center; margin-top: 40px; padding: 20px; color: #444; font-size: 13px; }
                 .login-btn.loading { opacity: 0.7; cursor: not-allowed; }
@@ -238,6 +248,8 @@
                 // Ajout de la fonction pour les boutons bulk
                 function changeQuantity(produit, amount) {
                     const quantities = getQuantities();
+                    // Correction : s'assurer que la clé existe et que la catégorie est bien sélectionnée
+                    if (!currentCategory || !(produit in quantities)) return;
                     quantities[produit] = (quantities[produit] || 0) + amount;
                     if (quantities[produit] < 0) quantities[produit] = 0;
                     saveQuantities(quantities);
