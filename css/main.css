@@ -254,6 +254,13 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+
+.btn:focus,
+.btn:active,
+.btn:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
 .btn:hover, .btn:focus {
 	background: #222;
 	border-color: var(--input-focus);
