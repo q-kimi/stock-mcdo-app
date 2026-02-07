@@ -111,6 +111,18 @@ body {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 }
+.login-footer {
+	max-width: 600px;
+	margin-top: 24px;
+	padding: 16px;
+	text-align: center;
+}
+.login-footer p {
+	font-size: 11px;
+	color: #555;
+	line-height: 1.5;
+	margin: 0;
+}
 .login-box {
 	background: var(--secondary);
 	border: 1px solid var(--border);
