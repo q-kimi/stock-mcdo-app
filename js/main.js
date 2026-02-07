@@ -37,17 +37,21 @@ function render() {
         produits = produits.filter(p => p.toLowerCase().includes(searchLower));
     }
     
+    // Produits qui utilisent des grammes
+    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia'];
+    
     produits.forEach(produit => {
         const item = document.createElement('div');
         item.className = 'product-item';
         const quantityValue = quantities[produit] !== undefined ? quantities[produit] : 0;
+        const unitSuffix = grammeProducts.includes(produit) ? 'g' : '';
         item.innerHTML = `
             <div class="product-name">${produit}</div>
             <div class="quantity-controls">
                 <button class="btn" data-action="decrement" data-produit="${produit}">−</button>
                 <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="5">+5</button>
                 <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="10">+10</button>
-                <div class="quantity" data-produit="${produit}" tabindex="0">${quantityValue}</div>
+                <div class="quantity" data-produit="${produit}" tabindex="0">${quantityValue}${unitSuffix}</div>
                 <button class="btn" data-action="increment" data-produit="${produit}">+</button>
             </div>
         `;
@@ -59,6 +63,9 @@ function render() {
 function renderManagerView(productList) {
     // Récupérer toutes les pertes de toutes les catégories
     const allLosses = [];
+    
+    // Produits qui utilisent des grammes
+    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia'];
     
     // Parcourir toutes les catégories de produits
     Object.keys(produitsParCategorie).forEach(category => {
@@ -82,9 +89,12 @@ function renderManagerView(productList) {
                     categoryName = 'Perte Comptoir';
                 }
                 
+                // Ajouter le suffixe "g" si nécessaire
+                const unitSuffix = grammeProducts.includes(produit) ? 'g' : '';
+                
                 allLosses.push({
                     produit,
-                    quantite: qty,
+                    quantite: qty + unitSuffix,
                     categorie: categoryName
                 });
             }
