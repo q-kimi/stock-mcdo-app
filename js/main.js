@@ -363,4 +363,9 @@ DOM.on(window, 'DOMContentLoaded', () => {
     console.log('  - clearAll(): Effacer toutes les données');
     console.log('  - showData(category): Afficher les données d\'une catégorie');
     console.log('  - listCategories(): Lister toutes les catégories');
+    
+    // Désactiver le clic droit
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
 });
