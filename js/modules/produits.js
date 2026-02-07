@@ -6,16 +6,16 @@ import { storage } from '../utils/storage.js';
 export const produitsParCategorie = {
     // Perte Cuisine - Sous-catégories
     'cuisine-table': [
-        'Salade',
-        'Cheddar orange',
-        'exemple 3',
-        'exemple 4',
-        'exemple 5',
-        'exemple 6',
-        'exemple 7',
-        'exemple 8',
-        'exemple 9',
-        'exemple 10'
+        'Oignons Royal',
+        'Oignons Frits',
+        'Cheddar Orange',
+        'Gouda',
+        'Cheddar Blanc',
+        'Bacon',
+        'Cornichons',
+        'Salade Mac',
+        'Salade Batavia',
+        'Tomates',
     ],
     'cuisine-sauces': [
         'exemple 1',
