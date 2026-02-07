@@ -1,8 +1,12 @@
 // Gestion de l'affichage UI
+import { cleanupLoading } from '../views/login.js';
 
 export function showLogin() {
     const loginScreen = document.getElementById('loginScreen');
     const appContainer = document.getElementById('appContainer');
+    
+    // Nettoyer l'animation de chargement si elle est en cours
+    cleanupLoading();
     
     if (loginScreen) loginScreen.style.display = 'flex';
     if (appContainer) {

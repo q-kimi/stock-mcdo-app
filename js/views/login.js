@@ -1,6 +1,9 @@
 // Vue de connexion
 import { tryLogin, getRememberedLogin } from '../modules/auth.js';
 import { showError, hideError, showApp } from '../modules/ui.js';
+import { LOADING_MESSAGES } from '../config/constants.js';
+
+let loadingInterval = null;
 
 export function initLoginView() {
     const loginForm = document.getElementById('loginForm');
@@ -14,6 +17,22 @@ export function initLoginView() {
     }
 
     loginForm.addEventListener('submit', handleLoginSubmit);
+    
+    // Nettoyer l'intervalle si il existe et réinitialiser le bouton
+    cleanupLoading();
+}
+
+export function cleanupLoading() {
+    if (loadingInterval) {
+        clearInterval(loadingInterval);
+        loadingInterval = null;
+    }
+    
+    const loginBtn = document.querySelector('.login-btn');
+    if (loginBtn) {
+        loginBtn.innerHTML = 'Connexion';
+        loginBtn.disabled = false;
+    }
 }
 
 function handleLoginSubmit(event) {
@@ -30,9 +49,26 @@ function handleLoginSubmit(event) {
     loginBtn.disabled = true;
     hideError();
     
-    loginBtn.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;"><div class="spinner"></div></div>';
+    // Animation avec messages de chargement
+    let messageIndex = 0;
+    const messageInterval = 500; // Chaque message affiché pendant 500ms
+    const totalDuration = LOADING_MESSAGES.length * messageInterval;
+    
+    const updateMessage = () => {
+        loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+            <div class="spinner"></div>
+            <div style="font-size:11px;color:#999;" class="loading-dots">${LOADING_MESSAGES[messageIndex]}</div>
+        </div>`;
+        messageIndex = (messageIndex + 1) % LOADING_MESSAGES.length;
+    };
+    
+    updateMessage();
+    loadingInterval = setInterval(updateMessage, messageInterval);
     
     setTimeout(() => {
+        clearInterval(loadingInterval);
+        loadingInterval = null;
+        
         if (tryLogin(username, password, rememberMe)) {
             showApp();
         } else {
@@ -40,8 +76,9 @@ function handleLoginSubmit(event) {
             loginBtn.disabled = false;
             showError('Identifiants incorrects');
         }
-    }, 500);
+    }, totalDuration);
 }
+
 
 
 

@@ -38,20 +38,17 @@ export const CUISINE_SUBCATEGORIES = [
 
 export const LOADING_MESSAGES = [
     'Chargement des modules...',
-    'Initialisation de la base...',
     'Vérification des accès...',
     'Connexion sécurisée...',
-    'Comptage des pertes en cours...',
-    'Recherche de frites disparues...',
-    'Recherche de nuggets égarés...',
-    'Recherche de steaks 10:1 perdus...',
-    'Recherche de cornichons disparus...',
-    'Analyse du ketchup restant...'
+    'Comptage de vos pertes en cours...',
+    'Analyse des données...',
+    'Préparation de l\'interface...',
+    'Finalisation du chargement...'
 ];
 
 export const ANIMATION_DURATION = {
-    LOGIN: 500,
+    LOGIN: 3500,
     MANAGER_LOGIN: 500,
-    MESSAGE_ROTATION: 700,
+    MESSAGE_ROTATION: 500,
     MESSAGE_FADE: 120
 };

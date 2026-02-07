@@ -693,6 +693,17 @@ input[type="checkbox"] {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+.loading-dots::after {
+	content: '';
+	animation: dots 1.5s steps(4, end) infinite;
+}
+@keyframes dots {
+	0%, 20% { content: ''; }
+	40% { content: '.'; }
+	60% { content: '..'; }
+	80%, 100% { content: '...'; }
+}
+
 @media (max-width: 600px) {
 	.container { max-width: 98vw; padding: 0 2vw; }
 	.login-box { padding: 20px; }
