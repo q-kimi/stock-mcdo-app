@@ -57,13 +57,16 @@
             <div class="product-view" id="productView">
                 <div class="product-header">
                     <h2 id="categoryTitle">Pertes</h2>
-                    <button class="back-btn">← Retour</button>
+                    <div class="header-buttons">
+                        <button class="reset-btn" id="resetLossesBtn" style="display:none;">Reset Pertes ⚠️</button>
+                        <button class="back-btn">← Retour</button>
+                    </div>
                 </div>
                 <div class="search-bar-container">
                     <input type="text" id="productSearch" class="search-bar" placeholder="🔍 Rechercher un produit..." autocomplete="off">
                 </div>
                 <div class="product-list" id="productList"></div>
-                <div class="footer">Données sauvegardées automatiquement</div>
+                <div class="footer" id="productFooter">Données sauvegardées automatiquement</div>
             </div>
         </div>
     <script type="module" src="js/main.js"></script>

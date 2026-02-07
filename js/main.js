@@ -140,12 +140,19 @@ function selectCategory(category) {
     DOM.addClass(DOM.getById('productView'), 'active');
     DOM.getById('categoryTitle').textContent = CATEGORY_TITLES[category];
     
-    // Masquer la barre de recherche pour la vue Manager
+    // Masquer la barre de recherche et le footer pour la vue Manager
     const searchBarContainer = document.querySelector('.search-bar-container');
+    const footer = DOM.getById('productFooter');
+    const resetBtn = DOM.getById('resetLossesBtn');
+    
     if (category === 'manager') {
         if (searchBarContainer) searchBarContainer.style.display = 'none';
+        if (footer) footer.style.display = 'none';
+        if (resetBtn) resetBtn.style.display = 'inline-block';
     } else {
         if (searchBarContainer) searchBarContainer.style.display = 'flex';
+        if (footer) footer.style.display = 'block';
+        if (resetBtn) resetBtn.style.display = 'none';
     }
     
     render();
@@ -160,9 +167,14 @@ function selectSubcategory(parentCategory, subcategoryId) {
     DOM.hide(DOM.getById('subcategorySelector'));
     DOM.addClass(DOM.getById('productView'), 'active');
     
-    // Afficher la barre de recherche
+    // Afficher la barre de recherche et le footer, cacher le bouton reset
     const searchBarContainer = document.querySelector('.search-bar-container');
+    const footer = DOM.getById('productFooter');
+    const resetBtn = DOM.getById('resetLossesBtn');
+    
     if (searchBarContainer) searchBarContainer.style.display = 'flex';
+    if (footer) footer.style.display = 'block';
+    if (resetBtn) resetBtn.style.display = 'none';
     
     // Récupérer le nom de la sous-catégorie
     const subcatName = document.querySelector(`[data-subcat-id="${subcategoryId}"]`)?.textContent || subcategoryId;
@@ -193,6 +205,24 @@ function handleLogout() {
     state.currentCategory = null;
     state.currentSearch = '';
     showLogin();
+}
+
+// Réinitialiser toutes les pertes
+function resetAllLosses() {
+    if (confirm('⚠️ Êtes-vous sûr de vouloir réinitialiser TOUTES les pertes ?\n\nCette action est irréversible.')) {
+        // Parcourir toutes les catégories et les réinitialiser
+        Object.keys(produitsParCategorie).forEach(category => {
+            if (category !== 'manager') {
+                resetCategoryData(category);
+            }
+        });
+        
+        // Rafraîchir l'affichage
+        render();
+        
+        // Notification
+        alert('✅ Toutes les pertes ont été réinitialisées.');
+    }
 }
 
 
@@ -293,6 +323,12 @@ DOM.on(window, 'DOMContentLoaded', () => {
     
     // Bouton logout
     DOM.onAll(DOM.getAll('.logout-btn'), 'click', handleLogout);
+    
+    // Bouton Reset Pertes (Manager)
+    const resetBtn = DOM.getById('resetLossesBtn');
+    if (resetBtn) {
+        DOM.on(resetBtn, 'click', resetAllLosses);
+    }
     
     // Utilitaire de débogage disponible dans la console
     window.debugMedalBot = {
