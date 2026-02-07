@@ -40,7 +40,7 @@ function handleLoginSubmit(event) {
             loginBtn.disabled = false;
             showError('Identifiants incorrects');
         }
-    }, 3000);
+    }, 500);
 }
 
 

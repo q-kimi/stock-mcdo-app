@@ -50,8 +50,8 @@ export const LOADING_MESSAGES = [
 ];
 
 export const ANIMATION_DURATION = {
-    LOGIN: 3000,
-    MANAGER_LOGIN: 3000,
+    LOGIN: 500,
+    MANAGER_LOGIN: 500,
     MESSAGE_ROTATION: 700,
     MESSAGE_FADE: 120
 };
