@@ -1,4 +1,7 @@
 // Configuration et constantes du projet
+
+// ===== MODULE AUTH (ISOLATED) =====
+// Ce module est isolé et ne sera jamais affecté par les modifications du site
 export const CREDENTIALS = {
     username: 'admin',
     password: 'admin'
@@ -9,42 +12,28 @@ export const STORAGE_KEYS = {
     REMEMBER_LOGIN: 'rememberLogin',
     STOCK_PREFIX: 'stockMcdo_'
 };
+// ===== FIN MODULE AUTH =====
 
+// ===== CONFIGURATION DES CATÉGORIES =====
 export const CATEGORIES = {
     CUISINE: 'cuisine',
-    COMPTOIR: 'comptoir'
+    COMPTOIR: 'comptoir',
+    MANAGER: 'manager'
 };
 
 export const CATEGORY_TITLES = {
     [CATEGORIES.CUISINE]: 'Perte Cuisine',
-    [CATEGORIES.COMPTOIR]: 'Perte Comptoir'
+    [CATEGORIES.COMPTOIR]: 'Perte Comptoir',
+    [CATEGORIES.MANAGER]: 'Manager'
 };
 
+// Sous-catégories de Perte Cuisine
 export const CUISINE_SUBCATEGORIES = [
-    { id: 'bigmac', name: 'Big Mac' },
-    { id: 'cheeseburger', name: 'Cheeseburger' },
-    { id: 'mcchicken', name: 'McChicken' },
-    { id: 'filet-o-fish', name: 'Filet-O-Fish' },
-    { id: 'mcflurry', name: 'McFlurry' },
-    { id: 'nuggets', name: 'Chicken McNuggets' },
-    { id: 'fries', name: 'Frites' },
-    { id: 'wrap', name: 'McWrap' },
-    { id: 'salad', name: 'Salade' },
-    { id: 'applepie', name: 'Apple Pie' },
-    // Ingrédients des burgers
-    { id: 'bun', name: 'Pain à burger' },
-    { id: 'beefpatty', name: 'Steak haché' },
-    { id: 'chickenpatty', name: 'Poulet pané' },
-    { id: 'fishpatty', name: 'Poisson pané' },
-    { id: 'cheese', name: 'Fromage' },
-    { id: 'lettuce', name: 'Salade' },
-    { id: 'tomato', name: 'Tomate' },
-    { id: 'onion', name: 'Oignon' },
-    { id: 'pickles', name: 'Cornichons' },
-    { id: 'sauce', name: 'Sauce spéciale' },
-    { id: 'mayonnaise', name: 'Mayonnaise' },
-    { id: 'ketchup', name: 'Ketchup' },
-    { id: 'mustard', name: 'Moutarde' }
+    { id: 'table', name: 'Table' },
+    { id: 'sauces', name: 'Sauces' },
+    { id: 'pain', name: 'Pain' },
+    { id: 'proteines', name: 'Protéines' },
+    { id: 'sandwichs', name: 'Sandwichs' }
 ];
 
 export const LOADING_MESSAGES = [
@@ -61,7 +50,8 @@ export const LOADING_MESSAGES = [
 ];
 
 export const ANIMATION_DURATION = {
-    LOGIN: 5000,
+    LOGIN: 3000,
+    MANAGER_LOGIN: 3000,
     MESSAGE_ROTATION: 700,
     MESSAGE_FADE: 120
 };

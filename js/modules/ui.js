@@ -1,29 +1,42 @@
 // Gestion de l'affichage UI
-import { DOM } from '../utils/dom.js';
 
 export function showLogin() {
-    DOM.show(DOM.getById('loginScreen'));
-    DOM.removeClass(DOM.getById('appContainer'), 'active');
+    const loginScreen = document.getElementById('loginScreen');
+    const appContainer = document.getElementById('appContainer');
+    
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (appContainer) {
+        appContainer.classList.remove('active');
+        appContainer.style.display = 'none';
+    }
 }
 
 export function showApp() {
-    DOM.hide(DOM.getById('loginScreen'));
-    DOM.addClass(DOM.getById('appContainer'), 'active');
-    DOM.show(DOM.getById('categorySelector'));
-    DOM.removeClass(DOM.getById('productView'), 'active');
+    const loginScreen = document.getElementById('loginScreen');
+    const appContainer = document.getElementById('appContainer');
+    const categorySelector = document.getElementById('categorySelector');
+    const productView = document.getElementById('productView');
+    
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (appContainer) {
+        appContainer.style.display = 'block';
+        appContainer.classList.add('active');
+    }
+    if (categorySelector) categorySelector.style.display = 'flex';
+    if (productView) productView.classList.remove('active');
 }
 
 export function showError(message) {
-    const errorElement = DOM.getById('errorMessage');
+    const errorElement = document.getElementById('errorMessage');
     if (errorElement) {
         errorElement.textContent = message;
-        DOM.show(errorElement);
+        errorElement.style.display = 'block';
     }
 }
 
 export function hideError() {
-    const errorElement = DOM.getById('errorMessage');
+    const errorElement = document.getElementById('errorMessage');
     if (errorElement) {
-        DOM.hide(errorElement);
+        errorElement.style.display = 'none';
     }
 }

@@ -21,7 +21,8 @@
 	-webkit-appearance: none;
 }
 .search-bar:focus {
-	border-color: var(--primary);
+	border-color: var(--input-border);
+	outline: none;
 }
 /* Empêcher le fond bleu sur l'autofill Chrome/Edge */
 input:-webkit-autofill,
@@ -897,5 +898,281 @@ input[type="checkbox"] {
     .quantity {
         font-size: 18px;
         min-width: 36px;
+    }
+}
+/* ====================================
+   POPUP MOT DE PASSE MANAGER
+==================================== */
+
+.manager-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.manager-popup-overlay.active {
+    display: flex;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.manager-popup {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.manager-popup-overlay.active .manager-popup {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.manager-popup h2 {
+    font-size: 24px;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.manager-popup p {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.manager-popup .form-group {
+    margin-bottom: 20px;
+}
+
+.manager-popup .form-group input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    font-size: 15px;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+
+.manager-popup .form-group input:focus {
+    outline: none;
+    border-color: var(--input-focus);
+}
+
+.manager-popup-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.cancel-btn,
+.confirm-btn {
+    flex: 1;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 44px;
+}
+
+.confirm-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.cancel-btn::before,
+.confirm-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+    transition: left 0.5s ease;
+}
+
+.cancel-btn:hover::before,
+.confirm-btn:hover::before {
+    left: 100%;
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus,
+.confirm-btn:hover,
+.confirm-btn:focus {
+    background: #222;
+    border-color: var(--input-focus);
+}
+
+.cancel-btn {
+    color: #999;
+}
+
+.cancel-btn:hover {
+    color: #fff;
+}
+
+.manager-popup #managerErrorMessage {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .manager-popup {
+        padding: 20px 15px;
+        max-width: 90%;
+    }
+    
+    .manager-popup h2 {
+        font-size: 20px;
+    }
+}
+
+/* ====================================
+   VUE MANAGER - TABLEAU DES PERTES
+==================================== */
+
+.manager-empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.manager-empty-state p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.manager-losses-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.manager-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 1px;
+    background: var(--secondary);
+    padding: 16px 20px;
+    font-weight: 500;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.manager-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 1px;
+    background: var(--secondary);
+    padding: 14px 20px;
+    transition: background 0.2s;
+}
+
+.manager-table-row:hover {
+    background: #151515;
+}
+
+.manager-col-product {
+    color: var(--main-fg);
+    font-size: 15px;
+}
+
+.manager-col-quantity {
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.manager-col-category {
+    color: #999;
+    font-size: 14px;
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    .manager-table-header,
+    .manager-table-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 12px 16px;
+    }
+    
+    .manager-table-header {
+        display: none;
+    }
+    
+    .manager-table-row {
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .manager-col-product,
+    .manager-col-quantity,
+    .manager-col-category {
+        text-align: left;
+    }
+    
+    .manager-col-product::before {
+        content: 'Produit: ';
+        color: #666;
+        font-weight: 500;
+        margin-right: 8px;
+    }
+    
+    .manager-col-quantity::before {
+        content: 'Quantité: ';
+        color: #666;
+        font-weight: 400;
+        margin-right: 8px;
+    }
+    
+    .manager-col-category::before {
+        content: 'Catégorie: ';
+        color: #666;
+        font-weight: 400;
+        margin-right: 8px;
     }
 }

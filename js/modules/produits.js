@@ -2,26 +2,112 @@
 import { STORAGE_KEYS } from '../config/constants.js';
 import { storage } from '../utils/storage.js';
 
+// Listes de produits par catégorie et sous-catégorie
 export const produitsParCategorie = {
-    cuisine: [
-        'Big Mac', 'McChicken', 'Royal Deluxe', 'Frites M', 'Frites L',
-        'Nuggets 4', 'Nuggets 9', 'Nuggets 20', 'Crousty Poulet',
-        "P'tit Wrap Ranch", 'Double Cheese', 'Filet-O-Fish'
+    // Perte Cuisine - Sous-catégories
+    'cuisine-table': [
+        'Salade',
+        'Cheddar orange',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
     ],
-    comptoir: [
-        'Coca-Cola M', 'Coca-Cola L', 'Sprite M', 'Fanta M',
-        'McFlurry Oreo', "McFlurry M&M's", 'Sundae Caramel',
-        'Sundae Chocolat', 'Milk-shake Vanille', 'Café',
-        'Cappuccino', 'Muffin'
+    'cuisine-sauces': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
+    ],
+    'cuisine-pain': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
+    ],
+    'cuisine-proteines': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
+    ],
+    'cuisine-sandwichs': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
+    ],
+    
+    // Perte Comptoir
+    'comptoir': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
+    ],
+    
+    // Manager
+    'manager': [
+        'exemple 1',
+        'exemple 2',
+        'exemple 3',
+        'exemple 4',
+        'exemple 5',
+        'exemple 6',
+        'exemple 7',
+        'exemple 8',
+        'exemple 9',
+        'exemple 10'
     ]
 };
 
 export function getQuantities(category) {
     const saved = storage.get(`${STORAGE_KEYS.STOCK_PREFIX}${category}`);
-    if (saved) return saved;
-    
     const produits = produitsParCategorie[category] || [];
-    return produits.reduce((acc, p) => ({ ...acc, [p]: 0 }), {});
+    
+    // Créer un objet avec tous les produits initialisés à 0
+    const defaultQuantities = produits.reduce((acc, p) => ({ ...acc, [p]: 0 }), {});
+    
+    // Si des données sauvegardées existent, les merger avec les valeurs par défaut
+    if (saved && typeof saved === 'object') {
+        return { ...defaultQuantities, ...saved };
+    }
+    
+    return defaultQuantities;
 }
 
 export function saveQuantities(category, quantities) {
@@ -35,4 +121,14 @@ export function updateQuantity(category, produit, amount) {
     quantities[produit] = Math.max(0, (quantities[produit] || 0) + amount);
     saveQuantities(category, quantities);
     return true;
+}
+// Fonction pour réinitialiser les données d'une catégorie
+export function resetCategoryData(category) {
+    storage.remove(`${STORAGE_KEYS.STOCK_PREFIX}${category}`);
+}
+
+// Fonction pour nettoyer toutes les données
+export function clearAllData() {
+    const categories = Object.keys(produitsParCategorie);
+    categories.forEach(cat => resetCategoryData(cat));
 }
