@@ -331,21 +331,6 @@ body {
 	font-weight: 300;
 	cursor: pointer;
 	transition: all 0.3s ease;
-	position: relative;
-	overflow: hidden;
-}
-#subcategoryButtons button::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-	transition: left 0.5s ease;
-}
-#subcategoryButtons button:hover::before {
-	left: 100%;
 }
 #subcategoryButtons button:hover {
 	background: #151515;
@@ -358,7 +343,6 @@ body {
 }
 #subcategoryButtons button:nth-child(5) {
 	grid-column: 2;
-	background: linear-gradient(135deg, var(--secondary) 0%, #0a0a0a 100%);
 }
 .category-btn {
 	background: var(--secondary);
@@ -369,23 +353,8 @@ body {
 	font-size: 18px;
 	cursor: pointer;
 	transition: all 0.2s ease;
-	position: relative;
-	overflow: hidden;
 }
-.category-btn::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-	transition: left 0.5s ease;
-}
-.category-btn:hover::before {
-	left: 100%;
-}
-.category-btn:hover, .category-btn:focus {
+.category-btn:hover {
 	background: #151515;
 	border-color: var(--border-hover);
 	transform: translateY(-2px);
@@ -434,7 +403,7 @@ body {
 .back-btn:hover::before {
 	left: 100%;
 }
-.back-btn:hover, .back-btn:focus {
+.back-btn:hover {
 	background: #222;
 	color: #fff;
 	border-color: var(--input-focus);

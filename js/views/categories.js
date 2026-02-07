@@ -5,6 +5,7 @@ import { CATEGORIES, CUISINE_SUBCATEGORIES, ANIMATION_DURATION } from '../config
 export function initCategoriesView(onCategorySelect, onSubcategorySelect) {
     // Gestion des catégories principales
     DOM.onAll(DOM.getAll('.category-btn'), 'click', (e) => {
+        e.target.blur();
         const btnText = e.target.textContent.trim();
         let cat;
         
@@ -25,7 +26,10 @@ export function initCategoriesView(onCategorySelect, onSubcategorySelect) {
     // Bouton retour des sous-catégories vers catégories
     const backBtn = DOM.getById('backToCategories');
     if (backBtn) {
-        DOM.on(backBtn, 'click', hideSubcategories);
+        DOM.on(backBtn, 'click', (e) => {
+            e.target.blur();
+            hideSubcategories();
+        });
     }
     
     // Fonction pour afficher les sous-catégories
@@ -43,7 +47,8 @@ export function initCategoriesView(onCategorySelect, onSubcategorySelect) {
             btn.className = 'category-btn';
             btn.textContent = subcat.name;
             btn.setAttribute('data-subcat-id', subcat.id);
-            DOM.on(btn, 'click', () => {
+            DOM.on(btn, 'click', (e) => {
+                e.target.blur();
                 onSubcategorySelect(CATEGORIES.CUISINE, subcat.id);
             });
             buttonsContainer.appendChild(btn);

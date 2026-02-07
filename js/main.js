@@ -322,12 +322,18 @@ DOM.on(window, 'DOMContentLoaded', () => {
     });
     
     // Bouton logout
-    DOM.onAll(DOM.getAll('.logout-btn'), 'click', handleLogout);
+    DOM.onAll(DOM.getAll('.logout-btn'), 'click', (e) => {
+        e.target.blur();
+        handleLogout();
+    });
     
     // Bouton Reset Pertes (Manager)
     const resetBtn = DOM.getById('resetLossesBtn');
     if (resetBtn) {
-        DOM.on(resetBtn, 'click', resetAllLosses);
+        DOM.on(resetBtn, 'click', (e) => {
+            e.target.blur();
+            resetAllLosses();
+        });
     }
     
     // Utilitaire de débogage disponible dans la console
