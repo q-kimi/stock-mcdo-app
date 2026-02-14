@@ -59,8 +59,6 @@ export const produitsParCategorie = {
     'Cheese',
     'Double Cheese',
     'Double Cheese Bacon',
-    'Triple Cheese',
-    'Triple Cheese Bacon',
     'Royal Cheese',
     'Royal Deluxe',
     'Royal Bacon',

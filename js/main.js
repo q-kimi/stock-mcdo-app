@@ -67,9 +67,21 @@ function render() {
         // Désactiver les boutons +5 et +10 pour les catégories "Perte Cuisine - Table", "Perte Cuisine - Sauces" et "Perte Cuisine - Sandwichs"
         const showBulkButtons = state.currentCategory !== 'cuisine-table' && state.currentCategory !== 'cuisine-sauces' && state.currentCategory !== 'cuisine-sandwichs';
         
-        // Ajouter une icône pour P'tit Wrap Ranch
-        const productDisplay = produit === "P'tit Wrap Ranch" 
-            ? `<img src="https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${produit}`
+        // Images des produits
+        const productImages = {
+            "P'tit Wrap Ranch": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale",
+            "Hamburger": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt615b9006573fd15e/667021dcc87a294b871df99b/Hamburger_GLOBAL_400x400_72DPI_.png?auto=webp&width=1280&disable=upscale",
+            "Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt2b47e0f28b8e53d7/666c673775b6dfc234a08c52/Cheeseburger_GLOBAL_400x400px_72DPI_V2.png?auto=webp&width=1280&disable=upscale",
+            "Double Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltc73f85540c1e6479/667021331ab5959105ebf6d6/DoubleCheeseburger_GLOBAL_400x400px_300DPI_V2.png?auto=webp&width=1280&disable=upscale",
+            "Double Cheese Bacon": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltc0667700e5022812/666c6745ab84255b569bab61/DoubleCheeseBacon_GLOBAL_400x400px_300DPI_V2.png?auto=webp&width=1280&disable=upscale",
+            "Royal Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt885bde09a2045ddf/666c6757dcc15c3ea2f08435/Royal_Cheese_LOGO_GLOBAL_400x400px_300_DPI_V3.png?auto=webp&width=1280&disable=upscale",
+            "Royal Deluxe": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt657a2c52468b17db/66cc5ed231537a3689c86dbd/ROYAL_DELUXE_LOGO_TBWA_400x400px_72DPI_V2.png?auto=webp&width=280&disable=upscale",
+            "Royal Bacon": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltadcf3a64c56a684d/666c6758f66fc66e0197fcf2/ROYALBACON_LOGO_GLOBAL_400x400px_300DPI_V4.png?auto=webp&width=280&disable=upscale"
+        };
+        
+        // Ajouter une icône si le produit en a une
+        const productDisplay = productImages[produit]
+            ? `<img src="${productImages[produit]}" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${produit}`
             : produit;
         
         item.innerHTML = `
@@ -167,9 +179,21 @@ function renderManagerView(productList) {
             const row = document.createElement('div');
             row.className = 'manager-table-row';
             
-            // Ajouter une icône pour P'tit Wrap Ranch
-            const productDisplay = loss.produit === "P'tit Wrap Ranch" 
-                ? `<img src="https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${loss.produit}`
+            // Images des produits
+            const productImages = {
+                "P'tit Wrap Ranch": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale",
+                "Hamburger": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt615b9006573fd15e/667021dcc87a294b871df99b/Hamburger_GLOBAL_400x400_72DPI_.png?auto=webp&width=1280&disable=upscale",
+                "Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt2b47e0f28b8e53d7/666c673775b6dfc234a08c52/Cheeseburger_GLOBAL_400x400px_72DPI_V2.png?auto=webp&width=1280&disable=upscale",
+                "Double Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltc73f85540c1e6479/667021331ab5959105ebf6d6/DoubleCheeseburger_GLOBAL_400x400px_300DPI_V2.png?auto=webp&width=1280&disable=upscale",
+                "Double Cheese Bacon": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltc0667700e5022812/666c6745ab84255b569bab61/DoubleCheeseBacon_GLOBAL_400x400px_300DPI_V2.png?auto=webp&width=1280&disable=upscale",
+                "Royal Cheese": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt885bde09a2045ddf/666c6757dcc15c3ea2f08435/Royal_Cheese_LOGO_GLOBAL_400x400px_300_DPI_V3.png?auto=webp&width=1280&disable=upscale",
+                "Royal Deluxe": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt657a2c52468b17db/66cc5ed231537a3689c86dbd/ROYAL_DELUXE_LOGO_TBWA_400x400px_72DPI_V2.png?auto=webp&width=280&disable=upscale",
+                "Royal Bacon": "https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/bltadcf3a64c56a684d/666c6758f66fc66e0197fcf2/ROYALBACON_LOGO_GLOBAL_400x400px_300DPI_V4.png?auto=webp&width=280&disable=upscale"
+            };
+            
+            // Ajouter une icône si le produit en a une
+            const productDisplay = productImages[loss.produit]
+                ? `<img src="${productImages[loss.produit]}" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${loss.produit}`
                 : loss.produit;
             
             row.innerHTML = `
