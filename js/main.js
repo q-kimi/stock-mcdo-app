@@ -38,19 +38,46 @@ function render() {
     }
     
     // Produits qui utilisent des grammes
-    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia'];
+    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia', 'Cornichons'];
+    // Produits qui utilisent des tranches
+    const trancheProducts = ['Cheddar Orange', 'Cheddar Blanc', 'Bacon', 'Tomate', 'Gouda'];
+    // Produits qui utilisent des millilitres
+    const millilitreProducts = ['Sauce Big Mac', 'Sauce McChicken', 'Sauce CBO', 'Sauce Tasty', 'Sauce Tartare', 'Sauce Crispy', 'Sauce Ranch', 'Sauce Extreme', 'Sauce Deluxe'];
     
     produits.forEach(produit => {
         const item = document.createElement('div');
         item.className = 'product-item';
-        const quantityValue = quantities[produit] !== undefined ? quantities[produit] : 0;
-        const unitSuffix = grammeProducts.includes(produit) ? 'g' : '';
+        let quantityValue = quantities[produit] !== undefined ? quantities[produit] : 0;
+        let unitSuffix = '';
+        
+        // Logique d'affichage des unités
+        if (grammeProducts.includes(produit)) {
+            if (quantityValue >= 1000) {
+                quantityValue = (quantityValue / 1000).toFixed(2).replace(/\.?0+$/, '');
+                unitSuffix = 'kg';
+            } else {
+                unitSuffix = 'g';
+            }
+        } else if (trancheProducts.includes(produit)) {
+            unitSuffix = 'tr';
+        } else if (millilitreProducts.includes(produit)) {
+            unitSuffix = 'ml';
+        }
+        
+        // Désactiver les boutons +5 et +10 pour les catégories "Perte Cuisine - Table" et "Perte Cuisine - Sauces"
+        const showBulkButtons = state.currentCategory !== 'cuisine-table' && state.currentCategory !== 'cuisine-sauces';
+        
+        // Ajouter une icône pour P'tit Wrap Ranch
+        const productDisplay = produit === "P'tit Wrap Ranch" 
+            ? `<img src="https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${produit}`
+            : produit;
+        
         item.innerHTML = `
-            <div class="product-name">${produit}</div>
+            <div class="product-name">${productDisplay}</div>
             <div class="quantity-controls">
                 <button class="btn" data-action="decrement" data-produit="${produit}">−</button>
-                <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="5">+5</button>
-                <button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="10">+10</button>
+                ${showBulkButtons ? `<button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="5">+5</button>` : ''}
+                ${showBulkButtons ? `<button class="btn btn-bulk" data-action="bulk" data-produit="${produit}" data-amount="10">+10</button>` : ''}
                 <div class="quantity" data-produit="${produit}" tabindex="0">${quantityValue}${unitSuffix}</div>
                 <button class="btn" data-action="increment" data-produit="${produit}">+</button>
             </div>
@@ -65,7 +92,11 @@ function renderManagerView(productList) {
     const allLosses = [];
     
     // Produits qui utilisent des grammes
-    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia'];
+    const grammeProducts = ['Oignons Royal', 'Oignons Frits', 'Salade Mac', 'Salade Batavia', 'Cornichons'];
+    // Produits qui utilisent des tranches
+    const trancheProducts = ['Cheddar Orange', 'Cheddar Blanc', 'Bacon', 'Tomate', 'Gouda'];
+    // Produits qui utilisent des millilitres
+    const millilitreProducts = ['Sauce Big Mac', 'Sauce McChicken', 'Sauce CBO', 'Sauce Tasty', 'Sauce Tartare', 'Sauce Crispy', 'Sauce Ranch', 'Sauce Extreme', 'Sauce Deluxe'];
     
     // Parcourir toutes les catégories de produits
     Object.keys(produitsParCategorie).forEach(category => {
@@ -75,7 +106,7 @@ function renderManagerView(productList) {
         const produits = produitsParCategorie[category];
         
         produits.forEach(produit => {
-            const qty = quantities[produit] || 0;
+            let qty = quantities[produit] || 0;
             if (qty > 0) {
                 // Déterminer le nom de la catégorie pour l'affichage
                 let categoryName = '';
@@ -89,12 +120,25 @@ function renderManagerView(productList) {
                     categoryName = 'Perte Comptoir';
                 }
                 
-                // Ajouter le suffixe "g" si nécessaire
-                const unitSuffix = grammeProducts.includes(produit) ? 'g' : '';
+                // Ajouter le suffixe d'unité si nécessaire avec conversion kg si nécessaire
+                let unitSuffix = '';
+                let displayQty = qty;
+                if (grammeProducts.includes(produit)) {
+                    if (qty >= 1000) {
+                        displayQty = (qty / 1000).toFixed(2).replace(/\.?0+$/, '');
+                        unitSuffix = 'kg';
+                    } else {
+                        unitSuffix = 'g';
+                    }
+                } else if (trancheProducts.includes(produit)) {
+                    unitSuffix = 'tr';
+                } else if (millilitreProducts.includes(produit)) {
+                    unitSuffix = 'ml';
+                }
                 
                 allLosses.push({
                     produit,
-                    quantite: qty + unitSuffix,
+                    quantite: displayQty + unitSuffix,
                     categorie: categoryName
                 });
             }
@@ -122,8 +166,14 @@ function renderManagerView(productList) {
         allLosses.forEach(loss => {
             const row = document.createElement('div');
             row.className = 'manager-table-row';
+            
+            // Ajouter une icône pour P'tit Wrap Ranch
+            const productDisplay = loss.produit === "P'tit Wrap Ranch" 
+                ? `<img src="https://eu-images.contentstack.com/v3/assets/blt5004e64d3579c43f/blt9e36841edcd93e8e/66cc5fbef4a825068c69ab5f/PETIT_WRAP_POULET_TBWA_400x400px_72DPI.png?auto=webp&width=1280&disable=upscale" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${loss.produit}`
+                : loss.produit;
+            
             row.innerHTML = `
-                <div class="manager-col-product">${loss.produit}</div>
+                <div class="manager-col-product">${productDisplay}</div>
                 <div class="manager-col-quantity">${loss.quantite}</div>
                 <div class="manager-col-category">${loss.categorie}</div>
             `;

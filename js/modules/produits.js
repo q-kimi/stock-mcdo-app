@@ -15,7 +15,7 @@ export const produitsParCategorie = {
         'Cornichons',
         'Salade Mac',
         'Salade Batavia',
-        'Tomates',
+        'Tomate',
     ],
     'cuisine-sauces': [
         'Sauce Big Mac',
@@ -52,6 +52,7 @@ export const produitsParCategorie = {
         'Filet',
         'Egg',
         'Palet Veggie',
+        'Apple Pie',
     ],
     'cuisine-sandwichs': [
 'Hamburger',

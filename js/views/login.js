@@ -51,8 +51,8 @@ function handleLoginSubmit(event) {
     
     // Animation avec messages de chargement
     let messageIndex = 0;
-    const messageInterval = 500; // Chaque message affiché pendant 500ms
-    const totalDuration = LOADING_MESSAGES.length * messageInterval;
+    const messageInterval = 250; // Chaque message affiché pendant 250ms
+    const totalDuration = 1000; // Durée totale de 1 seconde
     
     const updateMessage = () => {
         loginBtn.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
