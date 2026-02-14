@@ -481,6 +481,12 @@ body {
 	color: var(--main-fg);
 	font-size: 15px;
 }
+.product-image {
+	width: 140px;
+	height: 140px;
+	vertical-align: middle;
+	margin-right: 6px;
+}
 .quantity-controls {
 	display: flex;
 	align-items: center;
@@ -848,6 +854,11 @@ input[type="checkbox"] {
         font-size: 14px;
         text-align: center;
         width: 100%;
+    }
+    
+    .product-image {
+        display: block;
+        margin: 0 auto 8px auto;
     }
     
     .quantity-controls {
