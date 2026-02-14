@@ -64,8 +64,8 @@ function render() {
             unitSuffix = 'ml';
         }
         
-        // Désactiver les boutons +5 et +10 pour les catégories "Perte Cuisine - Table" et "Perte Cuisine - Sauces"
-        const showBulkButtons = state.currentCategory !== 'cuisine-table' && state.currentCategory !== 'cuisine-sauces';
+        // Désactiver les boutons +5 et +10 pour les catégories "Perte Cuisine - Table", "Perte Cuisine - Sauces" et "Perte Cuisine - Sandwichs"
+        const showBulkButtons = state.currentCategory !== 'cuisine-table' && state.currentCategory !== 'cuisine-sauces' && state.currentCategory !== 'cuisine-sandwichs';
         
         // Ajouter une icône pour P'tit Wrap Ranch
         const productDisplay = produit === "P'tit Wrap Ranch" 
