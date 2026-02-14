@@ -81,7 +81,7 @@ function render() {
         
         // Ajouter une icône si le produit en a une
         const productDisplay = productImages[produit]
-            ? `<img src="${productImages[produit]}" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${produit}`
+            ? `<img src="${productImages[produit]}" style="width:140px;height:140px;vertical-align:middle;margin-right:6px;">${produit}`
             : produit;
         
         item.innerHTML = `
@@ -193,7 +193,7 @@ function renderManagerView(productList) {
             
             // Ajouter une icône si le produit en a une
             const productDisplay = productImages[loss.produit]
-                ? `<img src="${productImages[loss.produit]}" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">${loss.produit}`
+                ? `<img src="${productImages[loss.produit]}" style="width:40px;height:40px;vertical-align:middle;margin-right:6px;">${loss.produit}`
                 : loss.produit;
             
             row.innerHTML = `
